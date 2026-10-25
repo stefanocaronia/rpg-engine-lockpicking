@@ -1,0 +1,40 @@
+name: Publish to npm
+
+# A tag v<version>, equal to package.json's version, publishes the package. Nothing else does.
+on:
+  push:
+    tags:
+      - "v[0-9]*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing needs npm 11.5.1 or later; Node 22 ships npm 10.
+      - run: npm install -g npm@11
+
+      - name: Check the tag against package.json
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if [ "${GITHUB_REF_NAME}" != "v${version}" ]; then
+            echo "The tag ${GITHUB_REF_NAME} does not match the version ${version}: tag v${version}, or change the version first."
+            exit 1
+          fi
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+
+      # npm's Trusted Publisher for this workflow and its release environment: no token, the job's OIDC identity publishes, with provenance.
+      - run: npm publish --provenance --access public

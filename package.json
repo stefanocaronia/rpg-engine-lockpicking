@@ -20,13 +20,31 @@
   ],
   "author": "Stefano Caronia",
   "license": "(MIT AND CC-BY-4.0)",
+  "homepage": "https://github.com/stefanocaronia/rpg-engine-lockpicking#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stefanocaronia/rpg-engine.git",
-    "directory": "extensions/lockpicking"
+    "url": "git+https://github.com/stefanocaronia/rpg-engine-lockpicking.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stefanocaronia/rpg-engine-lockpicking/issues"
   },
   "rpg-engine": {
     "kind": "extension",
     "api": 3
+  },
+  "engines": {
+    "node": ">=22.4"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "tsc --noEmit -p tsconfig.test.json",
+    "test": "npm run build && vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.4",
+    "fast-check": "^4.10.2",
+    "rpg-engine": "^0.5.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.3"
   }
 }
