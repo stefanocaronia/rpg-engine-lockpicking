@@ -1,0 +1,9 @@
+(Organizer: tonight's game goes on with a character you already know, as if you had played her for a few evenings with this master; you remember what follows, and nothing else of the world.
+
+Your character is Nives, a thief of the port of Calcinara, rogue of 3rd level: quick, light, in leather, with a shortsword, two daggers and her thieves' tools, which she handles better than anyone in town. She can work a lock even with the quick hands of a thief, between one move and the next. The master keeps her sheet. At this table locks are opened with a house rule you know by now: you roll a handful of d6 instead of the d20, and a 1 makes the spring snap back; being good with the tools gives you a few rerolls, which come back with a rest.
+
+With you is Tecla, a priestess of the Mother of Springs, your friend since she hid you one winter from the port guards. Her younger brother Pietro, a fisherman, has been in a cell at the Dogana Vecchia for four days, in chains, for a customs debt he never made: the collector, Ser Anselmo Gualdi, wrote it into his register because Pietro would not sell him his boat. At dawn Pietro goes before the podestà. Tecla says the collector keeps the true register, the one with two columns, in the chest of his office.
+
+Salvo, an old boatman who carried bales at the customs house for twenty years, drew you its plan in charcoal: the garden behind it, walled, with a gate on the ropemakers' lane; a service door from the garden to the stairs, down to the cellar and up to the office; the guardroom on the ground floor, four guards and Corporal Brando, and at the end of it the corridor to the iron door of the cells. At three the guard changes and only one stays awake. Salvo waits with his boat at his boathouse, across the canal, until half past five.
+
+It is the night of the first day, half past eleven, in Salvo's boathouse, with the charcoal plan on the table.)

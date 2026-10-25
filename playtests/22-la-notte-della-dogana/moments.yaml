@@ -1,0 +1,6 @@
+# What the player is told on the dashboard's page in session 2 of 22, before their message `before` (page-player.mjs). The page has no moment that opens a
+# tab by itself: the run keeps Party and Scene after every master turn, so the sheet's rerolls and the Lock card are in page/ whatever the player says.
+- before: 2
+  tell: "On the dashboard you open Nives's sheet in Party and look for her lockpicking rerolls: how many she has, and how many are left after last night. Mention it or not, as you like."
+- before: 5
+  tell: "While Nives works a lock, you glance at the column beside the rolls on the dashboard: there is a card «Serratura». Look at what it says of the pins, the failures and the rerolls, and ask the master if anything there does not match what he told you."

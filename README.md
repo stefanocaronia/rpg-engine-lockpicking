@@ -19,6 +19,10 @@ npm test
 
 `npm test` builds `dist/` first: the kit runs the extension as the engine installs it. To test against an engine you are changing, link it: `npm link` in the engine's folder, then `npm link rpg-engine` here; or keep the engine beside this repository and run `npm run test:downstream` from it, which builds the engine and runs these tests against it. `npm run lint` checks the types.
 
+## Playtests
+
+`playtests/` holds a scenario an AI master and an AI player play with the extension, a night of locks in an old customs house, with a second start at the cells' door. It is played with the runner of the engine's repo, beside this one: its `start.md` says how.
+
 ## Publish
 
 Raise `version` in `package.json`, commit, and push a tag `v<version>`: the workflow `publish.yml` checks, builds, tests and publishes to npm with Trusted Publishing, from the environment `release`.
