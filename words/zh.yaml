@@ -1,0 +1,34 @@
+# The words of lockpicking in Chinese (Simplified), as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: 按复杂度开锁，作者 Stefano Caronia
+about: 锁按复杂度掷d6打开，掷出1会让它复原，连续失败会损坏它，熟练给予重掷
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: 开锁重掷
+  lock-dc: 锁的DC
+  lock-failures: 连续失败
+  lock-worn: 锁的磨损
+  lock-tampered: 撬锁痕迹
+  lock-state: 锁的状态
+words:
+  "A 1 came up: reroll? {left} left": "掷出了1，要重掷吗？还剩{left}次重掷"
+  "{ones} ones came up: reroll them? {left} left": "掷出了{ones}个1，要重掷吗？还剩{left}次重掷"
+  "Leave": "不重掷"
+  "Not now": "暂不"
+  "{left} to go": "还差{left}"
+  "it resets": "锁会复原"
+  "Reroll": "重掷"
+  "{left} left": "还剩{left}次"
+  "A 1 resets the lock · one reroll for each 1": "掷出1锁就复原 · 每个1可重掷一次"
+  "{pins} pins, no 1": "{pins}个弹子，没有1"
+  "One pin, no 1": "1个弹子，没有1"
+  "A 1": "掷出1"
+  "{ones} ones": "{ones}个1"
+  Lock: 锁
+  Open: 已打开
+  Failed: 失败
+  Pins: 弹子
+  Failures: 连续失败
+  Signs of tampering: 撬锁痕迹
+  Harder: 更难开
+  Jammed: 卡死
+  Rerolls: 重掷

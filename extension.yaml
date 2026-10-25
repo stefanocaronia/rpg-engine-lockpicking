@@ -1,0 +1,27 @@
+# Lockpicking by complexity, for the fifth edition: d6 in place of the d20 to open a lock. Its code rolls and keeps the attempt; its part tells the master how
+# to use it.
+title: lockpicking by complexity, by Stefano Caronia
+about: a lock is opened with d6 by its complexity, a 1 resets it, failures in a row ruin it, proficiency gives rerolls
+language: en
+attribution: Lockpicking by complexity, by Stefano Caronia, CC BY 4.0.
+needs: {system: 5e}
+# On a lock's page: its DC, written by the master before the first try, and what the attempts did to it. On the character: the rerolls.
+fields:
+  lock-dc: number
+  lock-failures: number
+  lock-worn: number
+  lock-tampered: text
+  lock-state: text
+  lockpicking-rerolls: counter
+# The rerolls of who is proficient with thieves' tools, as many as the proficiency bonus, twice with expertise in them; back with a short rest, and so a long one.
+counters:
+  lockpicking-rerolls: {max: "has(tool-proficiencies, thieves' tools) * proficiency * (1 + has(expertise, thieves' tools))", refill: short rest}
+icons:
+  lock: "M7 11V8a5 5 0 0 1 10 0v3 M5 11h14v10H5Z M12 15v2"
+  lock-open: "M7 11V8a5 5 0 0 1 9.6-2 M5 11h14v10H5Z M12 15v2"
+# In the column beside the rolls, while someone of the party picks a lock, and with how it went until the scene changes.
+widgets:
+  lock:
+    title: Lock
+    icon: lock
+    place: side

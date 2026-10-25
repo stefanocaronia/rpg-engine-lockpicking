@@ -1,0 +1,34 @@
+# The words of lockpicking in French, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: le crochetage selon la complexité, par Stefano Caronia
+about: une serrure s'ouvre avec des d6 selon sa complexité, un 1 la remet à zéro, les échecs d'affilée l'abîment, la maîtrise donne des relances
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Relances de crochetage
+  lock-dc: DD de la serrure
+  lock-failures: Échecs d'affilée
+  lock-worn: Usure de la serrure
+  lock-tampered: Traces d'effraction
+  lock-state: État de la serrure
+words:
+  "A 1 came up: reroll? {left} left": "Un 1 est sorti : tu relances ? Relances restantes : {left}"
+  "{ones} ones came up: reroll them? {left} left": "{ones} fois 1 : tu les relances ? Relances restantes : {left}"
+  "Leave": "Laisser"
+  "Not now": "Pas maintenant"
+  "{left} to go": "Encore {left}"
+  "it resets": "elle se referme"
+  "Reroll": "Relancer"
+  "{left} left": "il t'en reste {left}"
+  "A 1 resets the lock · one reroll for each 1": "Un 1 remet la serrure à zéro · une relance par 1"
+  "{pins} pins, no 1": "{pins} goupilles, aucun 1"
+  "One pin, no 1": "Une goupille, aucun 1"
+  "A 1": "Un 1"
+  "{ones} ones": "{ones} fois 1"
+  Lock: Serrure
+  Open: Ouverte
+  Failed: Échec
+  Pins: Goupilles
+  Failures: Échecs d'affilée
+  Signs of tampering: Traces d'effraction
+  Harder: Plus dure
+  Jammed: Bloquée
+  Rerolls: Relances

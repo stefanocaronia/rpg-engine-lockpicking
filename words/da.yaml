@@ -1,0 +1,34 @@
+# The words of lockpicking in Danish, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: dirkning efter kompleksitet, af Stefano Caronia
+about: en lås åbnes med d6 efter sin kompleksitet, en etter nulstiller den, fejl i træk ødelægger den, mestring giver nye slag
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Nye slag til dirkning
+  lock-dc: Låsens sværhedsgrad
+  lock-failures: Fejl i træk
+  lock-worn: Låsens slid
+  lock-tampered: Dirkespor
+  lock-state: Låsens tilstand
+words:
+  "A 1 came up: reroll? {left} left": "Der kom en etter: slå igen? Nye slag tilbage: {left}"
+  "{ones} ones came up: reroll them? {left} left": "Der kom {ones} ettere: slå dem igen? Nye slag tilbage: {left}"
+  "Leave": "Lad være"
+  "Not now": "Ikke nu"
+  "{left} to go": "Tilbage: {left}"
+  "it resets": "den nulstilles"
+  "Reroll": "Slå igen"
+  "{left} left": "{left} tilbage"
+  "A 1 resets the lock · one reroll for each 1": "En etter nulstiller låsen · et nyt slag for hver etter"
+  "{pins} pins, no 1": "{pins} stifter, ingen etter"
+  "One pin, no 1": "Én stift, ingen etter"
+  "A 1": "En etter"
+  "{ones} ones": "{ones} ettere"
+  Lock: Lås
+  Open: Åben
+  Failed: Mislykket
+  Pins: Stifter
+  Failures: Fejl i træk
+  Signs of tampering: Dirkespor
+  Harder: Sværere
+  Jammed: Sidder fast
+  Rerolls: Nye slag

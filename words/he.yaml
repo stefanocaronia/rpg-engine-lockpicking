@@ -1,0 +1,34 @@
+# The words of lockpicking in Hebrew, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: פריצת מנעולים לפי מורכבות, מאת Stefano Caronia
+about: מנעול נפתח בקוביות d6 לפי מורכבותו, 1 מאפס אותו, כישלונות רצופים מקלקלים אותו, הכשרה נותנת הטלות חוזרות
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: הטלות חוזרות לפריצה
+  lock-dc: דרגת הקושי של המנעול
+  lock-failures: כישלונות רצופים
+  lock-worn: שחיקת המנעול
+  lock-tampered: סימני פריצה
+  lock-state: מצב המנעול
+words:
+  "A 1 came up: reroll? {left} left": "יצא 1: להטיל שוב? הטלות חוזרות שנותרו: {left}"
+  "{ones} ones came up: reroll them? {left} left": "יצא {ones} פעמים 1: להטיל אותן שוב? הטלות חוזרות שנותרו: {left}"
+  "Leave": "להשאיר"
+  "Not now": "לא עכשיו"
+  "{left} to go": "נותרו: {left}"
+  "it resets": "המנעול מתאפס"
+  "Reroll": "הטלה חוזרת"
+  "{left} left": "נותרו: {left}"
+  "A 1 resets the lock · one reroll for each 1": "1 מאפס את המנעול · הטלה חוזרת אחת לכל 1"
+  "{pins} pins, no 1": "{pins} פינים, בלי 1"
+  "One pin, no 1": "פין אחד, בלי 1"
+  "A 1": "יצא 1"
+  "{ones} ones": "{ones} פעמים 1"
+  Lock: מנעול
+  Open: פתוח
+  Failed: כישלון
+  Pins: פינים
+  Failures: כישלונות רצופים
+  Signs of tampering: סימני פריצה
+  Harder: קשה יותר
+  Jammed: תקוע
+  Rerolls: הטלות חוזרות

@@ -1,0 +1,34 @@
+# The words of lockpicking in Russian, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: взлом замков по сложности, автор Stefano Caronia
+about: замок открывается бросками к6 по его сложности, единица сбрасывает его, неудачи подряд портят его, мастерство даёт перебросы
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Перебросы взлома
+  lock-dc: СЛ замка
+  lock-failures: Неудачи подряд
+  lock-worn: Износ замка
+  lock-tampered: Следы взлома
+  lock-state: Состояние замка
+words:
+  "A 1 came up: reroll? {left} left": "Выпала единица: перебросить? Осталось перебросов: {left}"
+  "{ones} ones came up: reroll them? {left} left": "Выпали единицы ({ones}): перебросить их? Осталось перебросов: {left}"
+  "Leave": "Оставить"
+  "Not now": "Не сейчас"
+  "{left} to go": "Осталось: {left}"
+  "it resets": "замок сбросится"
+  "Reroll": "Перебросить"
+  "{left} left": "осталось: {left}"
+  "A 1 resets the lock · one reroll for each 1": "Единица сбрасывает замок · один переброс за каждую единицу"
+  "{pins} pins, no 1": "Штифтов: {pins}, ни одной единицы"
+  "One pin, no 1": "Один штифт, ни одной единицы"
+  "A 1": "Единица"
+  "{ones} ones": "Единиц: {ones}"
+  Lock: Замок
+  Open: Открыт
+  Failed: Провал
+  Pins: Штифты
+  Failures: Неудачи подряд
+  Signs of tampering: Следы взлома
+  Harder: Сложнее
+  Jammed: Заклинило
+  Rerolls: Перебросы

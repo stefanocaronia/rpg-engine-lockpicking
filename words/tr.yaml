@@ -1,0 +1,34 @@
+# The words of lockpicking in Turkish, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: karmaşıklığa göre kilit açma, Stefano Caronia'dan
+about: bir kilit karmaşıklığına göre d6'larla açılır, bir 1 onu sıfırlar, art arda başarısızlıklar onu bozar, yeterlilik yeniden atışlar verir
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Kilit açma yeniden atışları
+  lock-dc: Kilit zorluğu
+  lock-failures: Art arda başarısızlıklar
+  lock-worn: Kilit aşınması
+  lock-tampered: Kurcalama izleri
+  lock-state: Kilit durumu
+words:
+  "A 1 came up: reroll? {left} left": "1 geldi: yeniden atar mısın? Kalan yeniden atış: {left}"
+  "{ones} ones came up: reroll them? {left} left": "{ones} tane 1 geldi: yeniden atar mısın? Kalan yeniden atış: {left}"
+  "Leave": "Bırak"
+  "Not now": "Şimdi değil"
+  "{left} to go": "Kalan: {left}"
+  "it resets": "kilit sıfırlanır"
+  "Reroll": "Yeniden at"
+  "{left} left": "{left} kaldı"
+  "A 1 resets the lock · one reroll for each 1": "Bir 1 kilidi sıfırlar · her 1 için bir yeniden atış"
+  "{pins} pins, no 1": "{pins} pim, hiç 1 yok"
+  "One pin, no 1": "Bir pim, hiç 1 yok"
+  "A 1": "Bir 1"
+  "{ones} ones": "{ones} tane 1"
+  Lock: Kilit
+  Open: Açıldı
+  Failed: Başarısız
+  Pins: Pimler
+  Failures: Art arda başarısızlıklar
+  Signs of tampering: Kurcalama izleri
+  Harder: Daha zor
+  Jammed: Sıkıştı
+  Rerolls: Yeniden atışlar

@@ -1,0 +1,34 @@
+# The words of lockpicking in Ukrainian, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: зламування замків за складністю, автор Stefano Caronia
+about: замок відмикається кидками к6 за його складністю, одиниця скидає його, невдачі поспіль псують його, майстерність дає перекидання
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Перекидання зламу
+  lock-dc: СЛ замка
+  lock-failures: Невдачі поспіль
+  lock-worn: Знос замка
+  lock-tampered: Сліди злому
+  lock-state: Стан замка
+words:
+  "A 1 came up: reroll? {left} left": "Випала одиниця: перекинути? Залишилося перекидань: {left}"
+  "{ones} ones came up: reroll them? {left} left": "Випали одиниці ({ones}): перекинути їх? Залишилося перекидань: {left}"
+  "Leave": "Залишити"
+  "Not now": "Не зараз"
+  "{left} to go": "Залишилося: {left}"
+  "it resets": "замок скинеться"
+  "Reroll": "Перекинути"
+  "{left} left": "залишилося: {left}"
+  "A 1 resets the lock · one reroll for each 1": "Одиниця скидає замок · одне перекидання за кожну одиницю"
+  "{pins} pins, no 1": "Штифтів: {pins}, жодної одиниці"
+  "One pin, no 1": "Один штифт, жодної одиниці"
+  "A 1": "Одиниця"
+  "{ones} ones": "Одиниць: {ones}"
+  Lock: Замок
+  Open: Відімкнено
+  Failed: Провал
+  Pins: Штифти
+  Failures: Невдачі поспіль
+  Signs of tampering: Сліди злому
+  Harder: Складніше
+  Jammed: Заклинило
+  Rerolls: Перекидання

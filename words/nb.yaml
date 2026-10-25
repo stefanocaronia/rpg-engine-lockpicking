@@ -1,0 +1,34 @@
+# The words of lockpicking in Norwegian Bokmål, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: dirking etter kompleksitet, av Stefano Caronia
+about: et lås åpnes med d6 etter kompleksiteten sin, en ener nullstiller det, feil på rad ødelegger det, mestring gir omkast
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Omkast for dirking
+  lock-dc: VG for låset
+  lock-failures: Feil på rad
+  lock-worn: Slitasje på låset
+  lock-tampered: Dirkespor
+  lock-state: Låsets tilstand
+words:
+  "A 1 came up: reroll? {left} left": "Du fikk en ener: kaste om? Omkast igjen: {left}"
+  "{ones} ones came up: reroll them? {left} left": "Du fikk {ones} enere: kaste dem om? Omkast igjen: {left}"
+  "Leave": "La være"
+  "Not now": "Ikke nå"
+  "{left} to go": "Igjen: {left}"
+  "it resets": "det nullstilles"
+  "Reroll": "Kast om"
+  "{left} left": "{left} igjen"
+  "A 1 resets the lock · one reroll for each 1": "En ener nullstiller låset · ett omkast for hver ener"
+  "{pins} pins, no 1": "{pins} stifter, ingen ener"
+  "One pin, no 1": "Én stift, ingen ener"
+  "A 1": "En ener"
+  "{ones} ones": "{ones} enere"
+  Lock: Lås
+  Open: Åpent
+  Failed: Mislyktes
+  Pins: Stifter
+  Failures: Feil på rad
+  Signs of tampering: Dirkespor
+  Harder: Vanskeligere
+  Jammed: Satt fast
+  Rerolls: Omkast

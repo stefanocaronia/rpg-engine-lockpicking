@@ -1,0 +1,34 @@
+# The words of lockpicking in Dutch, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: sloten openen naar complexiteit, door Stefano Caronia
+about: een slot gaat open met d6 naar zijn complexiteit, een 1 zet het terug, mislukkingen op rij beschadigen het, vaardigheid geeft herworpen
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Herworpen voor sloten
+  lock-dc: DC van het slot
+  lock-failures: Mislukkingen op rij
+  lock-worn: Slijtage van het slot
+  lock-tampered: Braaksporen
+  lock-state: Staat van het slot
+words:
+  "A 1 came up: reroll? {left} left": "Er viel een 1: opnieuw gooien? Herworpen over: {left}"
+  "{ones} ones came up: reroll them? {left} left": "Er vielen {ones} enen: opnieuw gooien? Herworpen over: {left}"
+  "Leave": "Laten"
+  "Not now": "Nu niet"
+  "{left} to go": "Nog {left}"
+  "it resets": "het springt terug"
+  "Reroll": "Opnieuw gooien"
+  "{left} left": "nog {left} over"
+  "A 1 resets the lock · one reroll for each 1": "Een 1 zet het slot terug · een herworp voor elke 1"
+  "{pins} pins, no 1": "{pins} pinnen, geen 1"
+  "One pin, no 1": "Eén pin, geen 1"
+  "A 1": "Een 1"
+  "{ones} ones": "{ones} enen"
+  Lock: Slot
+  Open: Open
+  Failed: Mislukt
+  Pins: Pinnen
+  Failures: Mislukkingen op rij
+  Signs of tampering: Braaksporen
+  Harder: Lastiger
+  Jammed: Vastgelopen
+  Rerolls: Herworpen

@@ -1,0 +1,34 @@
+# The words of lockpicking in Czech, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: páčení zámků podle složitosti, autor Stefano Caronia
+about: zámek se otevírá hody k6 podle své složitosti, jednička ho vrátí na začátek, neúspěchy za sebou ho poškodí, zdatnost dává opakované hody
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Opakované hody páčení
+  lock-dc: SO zámku
+  lock-failures: Neúspěchy za sebou
+  lock-worn: Opotřebení zámku
+  lock-tampered: Stopy po páčení
+  lock-state: Stav zámku
+words:
+  "A 1 came up: reroll? {left} left": "Padla jednička: hodit znovu? Zbývá opakovaných hodů: {left}"
+  "{ones} ones came up: reroll them? {left} left": "Padly jedničky ({ones}): hodit je znovu? Zbývá opakovaných hodů: {left}"
+  "Leave": "Nechat"
+  "Not now": "Teď ne"
+  "{left} to go": "Zbývá: {left}"
+  "it resets": "zámek se vrátí na začátek"
+  "Reroll": "Hodit znovu"
+  "{left} left": "zbývá: {left}"
+  "A 1 resets the lock · one reroll for each 1": "Jednička vrátí zámek na začátek · jeden opakovaný hod za každou jedničku"
+  "{pins} pins, no 1": "Stavítek: {pins}, žádná jednička"
+  "One pin, no 1": "Jedno stavítko, žádná jednička"
+  "A 1": "Jednička"
+  "{ones} ones": "Jedniček: {ones}"
+  Lock: Zámek
+  Open: Otevřen
+  Failed: Neúspěch
+  Pins: Stavítka
+  Failures: Neúspěchy za sebou
+  Signs of tampering: Stopy po páčení
+  Harder: Těžší
+  Jammed: Zaseknutý
+  Rerolls: Opakované hody

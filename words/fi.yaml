@@ -1,0 +1,34 @@
+# The words of lockpicking in Finnish, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: tiirikointi monimutkaisuuden mukaan, tekijä Stefano Caronia
+about: lukko aukeaa d6-heitoilla monimutkaisuutensa mukaan, ykkönen palauttaa sen alkuun, peräkkäiset epäonnistumiset pilaavat sen, taitavuus antaa uusintaheittoja
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Tiirikoinnin uusintaheitot
+  lock-dc: Lukon VT
+  lock-failures: Epäonnistumiset peräkkäin
+  lock-worn: Lukon kuluminen
+  lock-tampered: Tiirikoinnin jäljet
+  lock-state: Lukon tila
+words:
+  "A 1 came up: reroll? {left} left": "Tuli ykkönen: heitätkö uudelleen? Uusintaheittoja jäljellä: {left}"
+  "{ones} ones came up: reroll them? {left} left": "Tuli {ones} ykköstä: heitätkö ne uudelleen? Uusintaheittoja jäljellä: {left}"
+  "Leave": "Jätä"
+  "Not now": "Ei nyt"
+  "{left} to go": "Jäljellä: {left}"
+  "it resets": "se palautuu alkuun"
+  "Reroll": "Heitä uudelleen"
+  "{left} left": "jäljellä {left}"
+  "A 1 resets the lock · one reroll for each 1": "Ykkönen palauttaa lukon alkuun · yksi uusintaheitto jokaisesta ykkösestä"
+  "{pins} pins, no 1": "{pins} tappia, ei ykköstä"
+  "One pin, no 1": "Yksi tappi, ei ykköstä"
+  "A 1": "Ykkönen"
+  "{ones} ones": "{ones} ykköstä"
+  Lock: Lukko
+  Open: Auki
+  Failed: Epäonnistui
+  Pins: Tapit
+  Failures: Epäonnistumiset peräkkäin
+  Signs of tampering: Tiirikoinnin jäljet
+  Harder: Vaikeampi
+  Jammed: Jumissa
+  Rerolls: Uusintaheitot

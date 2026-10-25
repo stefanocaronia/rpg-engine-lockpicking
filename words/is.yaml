@@ -1,0 +1,34 @@
+# The words of lockpicking in Icelandic, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: lásadýrkun eftir flækjustigi, eftir Stefano Caronia
+about: lás opnast með d6 eftir flækjustigi sínu, 1 endurstillir hann, mistök í röð eyðileggja hann, leikni gefur endurköst
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Endurköst við lásadýrkun
+  lock-dc: Erfiðleikastig láss
+  lock-failures: Mistök í röð
+  lock-worn: Slit á lás
+  lock-tampered: Ummerki um fikt
+  lock-state: Ástand láss
+words:
+  "A 1 came up: reroll? {left} left": "Upp kom 1: kasta aftur? Endurköst eftir: {left}"
+  "{ones} ones came up: reroll them? {left} left": "Upp kom {ones} sinnum 1: kasta aftur? Endurköst eftir: {left}"
+  "Leave": "Sleppa"
+  "Not now": "Ekki núna"
+  "{left} to go": "Eftir: {left}"
+  "it resets": "hann endurstillist"
+  "Reroll": "Kasta aftur"
+  "{left} left": "{left} eftir"
+  "A 1 resets the lock · one reroll for each 1": "1 endurstillir lásinn · eitt endurkast fyrir hverja 1"
+  "{pins} pins, no 1": "{pins} pinnar, engin 1"
+  "One pin, no 1": "Einn pinni, engin 1"
+  "A 1": "Ein 1"
+  "{ones} ones": "{ones} sinnum 1"
+  Lock: Lás
+  Open: Opinn
+  Failed: Mistókst
+  Pins: Pinnar
+  Failures: Mistök í röð
+  Signs of tampering: Ummerki um fikt
+  Harder: Erfiðari
+  Jammed: Fastur
+  Rerolls: Endurköst

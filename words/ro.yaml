@@ -1,0 +1,34 @@
+# The words of lockpicking in Romanian, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: descuierea după complexitate, de Stefano Caronia
+about: o încuietoare se deschide cu d6 după complexitatea ei, un 1 o resetează, eșecurile la rând o strică, competența dă rearuncări
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Rearuncări de descuiere
+  lock-dc: CD-ul încuietorii
+  lock-failures: Eșecuri la rând
+  lock-worn: Uzura încuietorii
+  lock-tampered: Urme de forțare
+  lock-state: Starea încuietorii
+words:
+  "A 1 came up: reroll? {left} left": "A ieșit un 1: arunci din nou? Rearuncări rămase: {left}"
+  "{ones} ones came up: reroll them? {left} left": "1 a ieșit de {ones} ori: le arunci din nou? Rearuncări rămase: {left}"
+  "Leave": "Lasă"
+  "Not now": "Nu acum"
+  "{left} to go": "Mai sunt: {left}"
+  "it resets": "se închide la loc"
+  "Reroll": "Aruncă din nou"
+  "{left} left": "rămase: {left}"
+  "A 1 resets the lock · one reroll for each 1": "Un 1 resetează încuietoarea · o rearuncare pentru fiecare 1"
+  "{pins} pins, no 1": "Știfturi: {pins}, niciun 1"
+  "One pin, no 1": "Un știft, niciun 1"
+  "A 1": "Un 1"
+  "{ones} ones": "1 de {ones} ori"
+  Lock: Încuietoare
+  Open: Deschisă
+  Failed: Eșuată
+  Pins: Știfturi
+  Failures: Eșecuri la rând
+  Signs of tampering: Urme de forțare
+  Harder: Mai grea
+  Jammed: Blocată
+  Rerolls: Rearuncări

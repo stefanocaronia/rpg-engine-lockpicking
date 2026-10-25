@@ -1,0 +1,34 @@
+# The words of lockpicking in Korean, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: 복잡도에 따른 자물쇠 따기, Stefano Caronia 제작
+about: 자물쇠는 복잡도에 따라 d6로 열려요. 1이 나오면 처음으로 돌아가고, 연달아 실패하면 망가지며, 숙련이 있으면 다시 굴릴 수 있어요
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: 자물쇠 따기 다시 굴리기
+  lock-dc: 자물쇠 DC
+  lock-failures: 연속 실패
+  lock-worn: 자물쇠 마모
+  lock-tampered: 따려던 흔적
+  lock-state: 자물쇠 상태
+words:
+  "A 1 came up: reroll? {left} left": "1이 나왔어요. 다시 굴릴까요? 남은 다시 굴리기: {left}"
+  "{ones} ones came up: reroll them? {left} left": "1이 {ones}개 나왔어요. 다시 굴릴까요? 남은 다시 굴리기: {left}"
+  "Leave": "그대로 두기"
+  "Not now": "나중에"
+  "{left} to go": "{left}개 남음"
+  "it resets": "처음으로 돌아가요"
+  "Reroll": "다시 굴리기"
+  "{left} left": "{left}번 남음"
+  "A 1 resets the lock · one reroll for each 1": "1이 나오면 자물쇠가 처음으로 · 1마다 다시 굴리기 한 번"
+  "{pins} pins, no 1": "핀 {pins}개, 1 없음"
+  "One pin, no 1": "핀 1개, 1 없음"
+  "A 1": "1 나옴"
+  "{ones} ones": "1이 {ones}개"
+  Lock: 자물쇠
+  Open: 열림
+  Failed: 실패
+  Pins: 핀
+  Failures: 연속 실패
+  Signs of tampering: 따려던 흔적
+  Harder: 더 어려움
+  Jammed: 막힘
+  Rerolls: 다시 굴리기

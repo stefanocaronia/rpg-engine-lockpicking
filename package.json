@@ -1,0 +1,32 @@
+{
+  "name": "@rpgengine/lockpicking",
+  "version": "0.1.0",
+  "description": "Lockpicking by complexity for RPG Engine, compatible with fifth edition: a lock is opened with d6 by its complexity, a 1 resets it, failures in a row ruin it, proficiency gives rerolls.",
+  "type": "module",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "instructions",
+    "extension.yaml",
+    "words",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "keywords": [
+    "rpg-engine-package",
+    "rpg-engine",
+    "lockpicking",
+    "ttrpg"
+  ],
+  "author": "Stefano Caronia",
+  "license": "(MIT AND CC-BY-4.0)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stefanocaronia/rpg-engine.git",
+    "directory": "extensions/lockpicking"
+  },
+  "rpg-engine": {
+    "kind": "extension",
+    "api": 3
+  }
+}

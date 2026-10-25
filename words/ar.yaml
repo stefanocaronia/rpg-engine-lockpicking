@@ -1,0 +1,34 @@
+# The words of lockpicking in Arabic, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: فتح الأقفال حسب التعقيد، من تأليف Stefano Caronia
+about: يُفتح القفل برميات d6 حسب تعقيده، والـ1 يعيده إلى البداية، والإخفاقات المتتالية تفسده، والإتقان يمنح إعادات للرمي
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: إعادات رمي فتح الأقفال
+  lock-dc: صعوبة القفل
+  lock-failures: إخفاقات متتالية
+  lock-worn: تآكل القفل
+  lock-tampered: آثار عبث
+  lock-state: حالة القفل
+words:
+  "A 1 came up: reroll? {left} left": "ظهر 1: إعادة الرمي؟ المتبقي من إعادات الرمي: {left}"
+  "{ones} ones came up: reroll them? {left} left": "ظهر 1 أكثر من مرة ({ones}): إعادة رميها؟ المتبقي من إعادات الرمي: {left}"
+  "Leave": "ترك"
+  "Not now": "ليس الآن"
+  "{left} to go": "المتبقي: {left}"
+  "it resets": "يعود القفل إلى البداية"
+  "Reroll": "إعادة الرمي"
+  "{left} left": "المتبقي: {left}"
+  "A 1 resets the lock · one reroll for each 1": "الـ1 يعيد القفل إلى البداية · إعادة رمي واحدة لكل 1"
+  "{pins} pins, no 1": "عدد المسامير: {pins}، بلا 1"
+  "One pin, no 1": "مسمار واحد، بلا 1"
+  "A 1": "ظهر 1"
+  "{ones} ones": "عدد الـ1: {ones}"
+  Lock: القفل
+  Open: مفتوح
+  Failed: إخفاق
+  Pins: المسامير
+  Failures: إخفاقات متتالية
+  Signs of tampering: آثار عبث
+  Harder: أصعب
+  Jammed: عالق
+  Rerolls: إعادات الرمي

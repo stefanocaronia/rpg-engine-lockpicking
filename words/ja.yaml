@@ -1,0 +1,34 @@
+# The words of lockpicking in Japanese, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: 複雑さによる解錠（Stefano Caronia作）
+about: 錠前は複雑さに応じてd6で開きます。1が出るとやり直しになり、続けて失敗すると傷み、習熟があれば振り直しができます
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: 解錠の振り直し
+  lock-dc: 錠前の難易度
+  lock-failures: 連続失敗
+  lock-worn: 錠前の摩耗
+  lock-tampered: こじ開けの痕跡
+  lock-state: 錠前の状態
+words:
+  "A 1 came up: reroll? {left} left": "1が出ました。振り直しますか？（残り{left}回）"
+  "{ones} ones came up: reroll them? {left} left": "1が{ones}個出ました。振り直しますか？（残り{left}回）"
+  "Leave": "そのまま"
+  "Not now": "今はしない"
+  "{left} to go": "あと{left}"
+  "it resets": "最初からやり直し"
+  "Reroll": "振り直す"
+  "{left} left": "残り{left}回"
+  "A 1 resets the lock · one reroll for each 1": "1が出ると錠は最初から · 1ごとに振り直し1回"
+  "{pins} pins, no 1": "ピン{pins}本、1なし"
+  "One pin, no 1": "ピン1本、1なし"
+  "A 1": "1が出た"
+  "{ones} ones": "1が{ones}個"
+  Lock: 錠前
+  Open: 解錠
+  Failed: 失敗
+  Pins: ピン
+  Failures: 連続失敗
+  Signs of tampering: こじ開けの痕跡
+  Harder: 固くなった
+  Jammed: 動かない
+  Rerolls: 振り直し

@@ -1,0 +1,34 @@
+# The words of lockpicking in Hindi, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: जटिलता के अनुसार ताला खोलना, Stefano Caronia का
+about: ताला अपनी जटिलता के अनुसार d6 से खुलता है, 1 आने पर वह फिर से शुरू हो जाता है, लगातार विफलताएँ उसे बिगाड़ देती हैं, दक्षता से दोबारा रोल मिलते हैं
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: ताला खोलने के दोबारा रोल
+  lock-dc: ताले का DC
+  lock-failures: लगातार विफलताएँ
+  lock-worn: ताले की घिसावट
+  lock-tampered: छेड़छाड़ के निशान
+  lock-state: ताले की स्थिति
+words:
+  "A 1 came up: reroll? {left} left": "1 आया: दोबारा रोल करें? बचे दोबारा रोल: {left}"
+  "{ones} ones came up: reroll them? {left} left": "{ones} बार 1 आया: इन्हें दोबारा रोल करें? बचे दोबारा रोल: {left}"
+  "Leave": "रहने दें"
+  "Not now": "अभी नहीं"
+  "{left} to go": "बाकी: {left}"
+  "it resets": "ताला फिर से शुरू हो जाता है"
+  "Reroll": "दोबारा रोल करें"
+  "{left} left": "बचे: {left}"
+  "A 1 resets the lock · one reroll for each 1": "1 आने पर ताला फिर से शुरू · हर 1 के लिए एक दोबारा रोल"
+  "{pins} pins, no 1": "{pins} पिन, कोई 1 नहीं"
+  "One pin, no 1": "एक पिन, कोई 1 नहीं"
+  "A 1": "एक 1"
+  "{ones} ones": "{ones} बार 1"
+  Lock: ताला
+  Open: खुला
+  Failed: विफल
+  Pins: पिन
+  Failures: लगातार विफलताएँ
+  Signs of tampering: छेड़छाड़ के निशान
+  Harder: और कठिन
+  Jammed: अटका हुआ
+  Rerolls: दोबारा रोल

@@ -1,0 +1,34 @@
+# The words of lockpicking in Hungarian, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: zárnyitás bonyolultság szerint, Stefano Caronia munkája
+about: a zár k6-okkal nyílik a bonyolultsága szerint, egy 1-es visszaállítja, az egymás utáni kudarcok elrontják, a jártasság újradobásokat ad
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Zárnyitási újradobások
+  lock-dc: A zár NK-ja
+  lock-failures: Egymás utáni kudarcok
+  lock-worn: A zár kopása
+  lock-tampered: Feltörés nyomai
+  lock-state: A zár állapota
+words:
+  "A 1 came up: reroll? {left} left": "1-est dobtál: újradobod? Hátralévő újradobások: {left}"
+  "{ones} ones came up: reroll them? {left} left": "{ones} darab 1-est dobtál: újradobod őket? Hátralévő újradobások: {left}"
+  "Leave": "Hagyd"
+  "Not now": "Most nem"
+  "{left} to go": "Hátravan: {left}"
+  "it resets": "visszaáll"
+  "Reroll": "Újradobás"
+  "{left} left": "még {left}"
+  "A 1 resets the lock · one reroll for each 1": "Egy 1-es visszaállítja a zárat · minden 1-esért egy újradobás"
+  "{pins} pins, no 1": "{pins} csap, nincs 1-es"
+  "One pin, no 1": "Egy csap, nincs 1-es"
+  "A 1": "Egy 1-es"
+  "{ones} ones": "{ones} darab 1-es"
+  Lock: Zár
+  Open: Nyitva
+  Failed: Kudarc
+  Pins: Csapok
+  Failures: Egymás utáni kudarcok
+  Signs of tampering: Feltörés nyomai
+  Harder: Nehezebb
+  Jammed: Beragadt
+  Rerolls: Újradobások

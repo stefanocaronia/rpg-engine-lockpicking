@@ -1,0 +1,34 @@
+# The words of lockpicking in Greek, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: το ξεκλείδωμα κατά πολυπλοκότητα, του Stefano Caronia
+about: μια κλειδαριά ανοίγει με d6 ανάλογα με την πολυπλοκότητά της, ένα 1 την επαναφέρει, οι συνεχόμενες αποτυχίες τη χαλάνε, η επάρκεια δίνει επαναρρίψεις
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Επαναρρίψεις ξεκλειδώματος
+  lock-dc: ΒΔ κλειδαριάς
+  lock-failures: Συνεχόμενες αποτυχίες
+  lock-worn: Φθορά κλειδαριάς
+  lock-tampered: Ίχνη παραβίασης
+  lock-state: Κατάσταση κλειδαριάς
+words:
+  "A 1 came up: reroll? {left} left": "Ήρθε 1: ξαναρίχνεις; Επαναρρίψεις που μένουν: {left}"
+  "{ones} ones came up: reroll them? {left} left": "Ήρθε {ones} φορές το 1: τα ξαναρίχνεις; Επαναρρίψεις που μένουν: {left}"
+  "Leave": "Άφησέ το"
+  "Not now": "Όχι τώρα"
+  "{left} to go": "Μένουν: {left}"
+  "it resets": "ξανακλείνει"
+  "Reroll": "Ξαναρίξε"
+  "{left} left": "μένουν: {left}"
+  "A 1 resets the lock · one reroll for each 1": "Ένα 1 επαναφέρει την κλειδαριά · μία επαναρρίψη για κάθε 1"
+  "{pins} pins, no 1": "{pins} πείροι, κανένα 1"
+  "One pin, no 1": "Ένας πείρος, κανένα 1"
+  "A 1": "Ένα 1"
+  "{ones} ones": "{ones} φορές το 1"
+  Lock: Κλειδαριά
+  Open: Ανοιχτή
+  Failed: Αποτυχία
+  Pins: Πείροι
+  Failures: Συνεχόμενες αποτυχίες
+  Signs of tampering: Ίχνη παραβίασης
+  Harder: Πιο δύσκολη
+  Jammed: Μπλοκαρισμένη
+  Rerolls: Επαναρρίψεις

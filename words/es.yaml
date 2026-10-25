@@ -1,0 +1,34 @@
+# The words of lockpicking in Spanish, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: abrir cerraduras por complejidad, de Stefano Caronia
+about: una cerradura se abre con d6 según su complejidad, un 1 la reinicia, los fallos seguidos la estropean, la competencia da repeticiones de tirada
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Repeticiones de forzado
+  lock-dc: CD de la cerradura
+  lock-failures: Fallos seguidos
+  lock-worn: Desgaste de la cerradura
+  lock-tampered: Marcas de forzado
+  lock-state: Estado de la cerradura
+words:
+  "A 1 came up: reroll? {left} left": "Ha salido un 1: ¿lo repites? Repeticiones restantes: {left}"
+  "{ones} ones came up: reroll them? {left} left": "Han salido {ones} unos: ¿los repites? Repeticiones restantes: {left}"
+  "Leave": "Dejar"
+  "Not now": "Ahora no"
+  "{left} to go": "Faltan: {left}"
+  "it resets": "se vuelve a cerrar"
+  "Reroll": "Repetir"
+  "{left} left": "restantes: {left}"
+  "A 1 resets the lock · one reroll for each 1": "Un 1 reinicia la cerradura · una repetición por cada 1"
+  "{pins} pins, no 1": "{pins} pines, ningún 1"
+  "One pin, no 1": "Un pin, ningún 1"
+  "A 1": "Un 1"
+  "{ones} ones": "{ones} unos"
+  Lock: Cerradura
+  Open: Abierta
+  Failed: Fallida
+  Pins: Pines
+  Failures: Fallos seguidos
+  Signs of tampering: Marcas de forzado
+  Harder: Más dura
+  Jammed: Atascada
+  Rerolls: Repeticiones

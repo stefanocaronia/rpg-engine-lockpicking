@@ -1,0 +1,34 @@
+# The words of lockpicking in German, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes; from words/it.yaml.
+title: das Schlossknacken nach Komplexität, von Stefano Caronia
+about: ein Schloss öffnet sich mit W6 nach seiner Komplexität, eine 1 setzt es zurück, Fehlschläge in Folge ruinieren es, Übung gibt Neuwürfe
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Neuwürfe beim Schlossknacken
+  lock-dc: SG des Schlosses
+  lock-failures: Fehlschläge in Folge
+  lock-worn: Abnutzung des Schlosses
+  lock-tampered: Aufbruchspuren
+  lock-state: Zustand des Schlosses
+words:
+  "A 1 came up: reroll? {left} left": "Eine 1 ist gefallen: neu würfeln? Neuwürfe übrig: {left}"
+  "{ones} ones came up: reroll them? {left} left": "{ones}-mal die 1: neu würfeln? Neuwürfe übrig: {left}"
+  "Leave": "Lassen"
+  "Not now": "Nicht jetzt"
+  "{left} to go": "Noch {left}"
+  "it resets": "es springt zurück"
+  "Reroll": "Neu würfeln"
+  "{left} left": "noch {left}"
+  "A 1 resets the lock · one reroll for each 1": "Eine 1 setzt das Schloss zurück · ein Neuwurf für jede 1"
+  "{pins} pins, no 1": "{pins} Stifte, keine 1"
+  "One pin, no 1": "Ein Stift, keine 1"
+  "A 1": "Eine 1"
+  "{ones} ones": "{ones}-mal die 1"
+  Lock: Schloss
+  Open: Offen
+  Failed: Gescheitert
+  Pins: Stifte
+  Failures: Fehlschläge in Folge
+  Signs of tampering: Aufbruchspuren
+  Harder: Schwerer
+  Jammed: Verklemmt
+  Rerolls: Neuwürfe

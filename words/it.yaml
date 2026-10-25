@@ -1,0 +1,35 @@
+# The words of lockpicking in Italian, as the dashboard shows them (D-502, D-505): its title and line in Packages, its fields' names, and what its widget writes.
+title: lo scasso per complessità, di Stefano Caronia
+about: una serratura si apre con i d6 secondo la sua complessità, un 1 la resetta, i fallimenti di fila la rovinano, la competenza dà ritiri
+# The names of the fields it adds to the system, as the sheet and show write them.
+fields:
+  lockpicking-rerolls: Ritiri di scasso
+  lock-dc: CD della serratura
+  lock-failures: Fallimenti di fila
+  lock-worn: Usura della serratura
+  lock-tampered: Segni di scasso
+  lock-state: Stato della serratura
+words:
+  # What the player is asked, and what their rolls mean.
+  "A 1 came up: reroll? {left} left": "È uscito un 1: lo ritiri? Ritiri rimasti: {left}"
+  "{ones} ones came up: reroll them? {left} left": "Sono usciti {ones} 1: li ritiri? Ritiri rimasti: {left}"
+  Leave: Lascia
+  Not now: Non ora
+  "{left} to go": "Ne mancano {left}"
+  it resets: si richiude
+  Reroll: Ritira
+  "{left} left": "ne hai {left}"
+  "A 1 resets the lock · one reroll for each 1": "Un 1 rimette la serratura a zero · un ritiro per ogni 1"
+  "{pins} pins, no 1": "{pins} perni, nessun 1"
+  One pin, no 1: Un perno, nessun 1
+  A 1: Un 1
+  "{ones} ones": "{ones} volte 1"
+  Lock: Serratura
+  Open: Aperta
+  Failed: Fallita
+  Pins: Perni
+  Failures: Fallimenti di fila
+  Signs of tampering: Segni di scasso
+  Harder: Più dura
+  Jammed: Bloccata
+  Rerolls: Ritiri
