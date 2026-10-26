@@ -17,6 +17,9 @@ fields:
 # most, two with expertise in them (D-508).
 counters:
   lockpicking-rerolls: {max: "has(tool-proficiencies, thieves' tools) * proficiency", refill: short rest}
+# The cylinder in section its page code draws, a pin for each die (D-509, D-510); without words, it turns right to left.
+figures:
+  tumblers: {width: 360, height: 105, mirror: true}
 icons:
   lock: "M7 11V8a5 5 0 0 1 10 0v3 M5 11h14v10H5Z M12 15v2"
   lock-open: "M7 11V8a5 5 0 0 1 9.6-2 M5 11h14v10H5Z M12 15v2"

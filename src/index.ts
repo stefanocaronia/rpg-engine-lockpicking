@@ -3,6 +3,7 @@
 // of the party. The rules are in lock.ts.
 import type { AskedRoll, ExtensionEntry, ExtensionKit, Game, GamePage, GameView, Track, Widget, WidgetText } from "rpg-engine";
 import { canReroll, complexity, diceToRoll, failureOf, failuresToJam, needsTools, onesIn, rerollsLeft, rerollsPerAttempt, rogueReduction, roundedDc, timeOf } from "./lock.ts";
+import { tumblersOf } from "./tumblers.ts";
 
 /**
  * An attempt in progress on a lock, by its page's name: who picks it, the dice it needs and those passed, the scene it began in, the words the player is asked in, whether the player was asked in words to go ahead, which the next call rolls, and the ones of a
@@ -694,9 +695,11 @@ function lockWidget(game: GameView, card?: string): Widget | undefined
     const jamsAt = failuresToJam(typeof dc === "number" ? dc : 15, proficient);
     const tone = shown.outcome === undefined ? {} : { tone: shown.outcome === "open" ? ("good" as const) : ("bad" as const) };
     return {
+        // The cylinder its page code draws from these, never the lock's name nor its DC (D-509, D-510).
+        data: tumblersOf({ dice: shown.dice, passed: shown.passed, ...("pending" in shown && shown.pending !== undefined ? { pending: shown.pending } : {}), fight: inFight(game), ...(shown.outcome === undefined ? {} : { outcome: shown.outcome }) }),
         parts: [
             { lead, icon: shown.outcome === "open" ? "lock-open" : "lock", ...tone },
-            ...(shown.dice === 0 ? [] : [{ track: pinsOf(game, shown) }]),
+            ...(shown.dice === 0 ? [] : [{ track: { ...pinsOf(game, shown), figure: "tumblers" } }]),
             ...(shown.outcome === "open" ? [] : [{ track: { label: "Failures", value: failures, max: jamsAt, look: "pips" as const, stage: "end" as const, tone: "bad" as const } }]),
             ...(facts.length === 0 ? [] : [{ facts }]),
             ...leftText(shown),

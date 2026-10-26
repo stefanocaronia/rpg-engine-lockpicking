@@ -4,6 +4,7 @@ import fc from "fast-check";
 import { fileURLToPath } from "node:url";
 import { type Context, type Rows, type TestCampaign, testCampaign } from "rpg-engine/testing";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { type Tumblers, type TumblersOf, tumblersOf } from "../src/tumblers.ts";
 import { canReroll, complexity, diceToRoll, failureOf, failuresToJam, needsTools, onesIn, rerollsLeft, rerollsPerAttempt, rogueReduction, rolledAttempt, roundedDc, timeOf } from "../src/lock.ts";
 
 /** Dice that show these faces in turn. */
@@ -118,6 +119,32 @@ describe("the rules of lockpicking by complexity", () => {
     });
 });
 
+describe("the cylinder the page code draws (D-509, D-510)", () => {
+    it("lifts the pins passed, holds those of a roll while its 1s wait, marks the 1s after them, and puts the pick under the pin it works on", () => {
+        const cases: [TumblersOf, Tumblers][] = [
+            [{ dice: 4, passed: 0, fight: false }, { pins: 4, up: 0, held: 0, ones: [], coming: 4, pick: 0 }],
+            [{ dice: 6, passed: 2, fight: true }, { pins: 6, up: 2, held: 0, ones: [], coming: 2, pick: 2 }],
+            [{ dice: 6, passed: 4, fight: true }, { pins: 6, up: 4, held: 0, ones: [], coming: 2, pick: 4 }],
+            [{ dice: 6, passed: 2, pending: { ones: 1, rolled: 2 }, fight: true }, { pins: 6, up: 2, held: 1, ones: [3], coming: 0, pick: 3 }],
+            [{ dice: 4, passed: 0, pending: { ones: 2, rolled: 4 }, fight: false }, { pins: 4, up: 0, held: 2, ones: [2, 3], coming: 0, pick: 2 }],
+            [{ dice: 4, passed: 2, fight: false, outcome: "open" }, { pins: 4, up: 4, held: 0, ones: [], coming: 0, pick: null, outcome: "open" }],
+            [{ dice: 6, passed: 4, fight: true, outcome: "failed" }, { pins: 6, up: 0, held: 0, ones: [], coming: 0, pick: 0, outcome: "failed" }],
+        ];
+
+        for (const [attempt, cylinder] of cases) {
+            expect(tumblersOf(attempt), JSON.stringify(attempt)).toEqual(cylinder);
+        }
+    });
+
+    it("never gives more pins up, held, marked or coming than there are, whatever the attempt", () => {
+        fc.assert(fc.property(fc.integer({ min: 0, max: 24 }), fc.integer({ min: 0, max: 30 }), fc.option(fc.record({ ones: fc.integer({ min: 0, max: 6 }), rolled: fc.integer({ min: 0, max: 24 }) }), { nil: undefined }), fc.boolean(), (dice, passed, pending, fight) => {
+            const cylinder = tumblersOf({ dice, passed, ...(pending === undefined ? {} : { pending }), fight });
+            expect(cylinder.up + cylinder.held + cylinder.ones.length + cylinder.coming).toBeLessThanOrEqual(cylinder.pins);
+            expect(cylinder.ones.every((pin) => pin >= cylinder.up + cylinder.held && pin < cylinder.pins)).toBe(true);
+        }));
+    });
+});
+
 describe("lockpicking in a campaign", () => {
     // The extension's own folder, installed in each test campaign as the player's own.
     const extension = fileURLToPath(new URL("..", import.meta.url));
@@ -215,10 +242,11 @@ describe("lockpicking in a campaign", () => {
             `Bruna passes 2 of the 4 dice of ${door} with their action, 2 left: call lockpicking-pick again at their next action; with Fast Hands, twice in a round. If they leave the lock, fall or turn to fight, break it off with stop.`,
         );
         const [card] = await widgets();
-        expect(card).toMatchObject({ id: "lockpicking.lock", place: "side", title: "Lock" });
+        expect(card).toMatchObject({ id: "lockpicking.lock", place: "side", title: "Lock", module: "/pkg/%40rpgengine%2Flockpicking/0.2.0/page.js", figures: { tumblers: { width: 360, height: 105, mirror: true } } });
+        expect(card.shows?.data).toEqual({ pins: 4, up: 2, held: 0, ones: [], coming: 2, pick: 2 });
         expect(card.shows?.parts).toEqual([
             { lead: "Bruna", icon: expect.stringMatching(/^M7 11V8a5 5 0 0 1 10 0/) },
-            { track: { label: "Pins", value: 2, max: 4, look: "steps", stage: "center", coming: 2 } },
+            { track: { label: "Pins", value: 2, max: 4, look: "steps", stage: "center", coming: 2, figure: "tumblers" } },
             { track: { label: "Failures", value: 0, max: 4, look: "pips", stage: "end", tone: "bad" } },
             { text: { text: "{left} to go", values: { left: 2 } } },
             { track: { label: "Rerolls", value: 2, max: 2, look: "pips", stage: "start", tone: "good" } },
@@ -245,7 +273,7 @@ describe("lockpicking in a campaign", () => {
         await ok("lockpicking-pick", door, "--who", "Lena");
         expect((await widgets())[0].shows?.parts).toEqual([
             { lead: "Failed", icon: expect.stringMatching(/^M7 11V8a5 5 0 0 1 10 0/), tone: "bad" },
-            { track: { label: "Pins", value: 0, max: 6, look: "steps", stage: "center" } },
+            { track: { label: "Pins", value: 0, max: 6, look: "steps", stage: "center", figure: "tumblers" } },
             { track: { label: "Failures", value: 2, max: 4, look: "pips", stage: "end", tone: "bad" } },
             { facts: ["Signs of tampering"] },
             { track: { label: "Rerolls", value: 0, max: 2, look: "pips", stage: "start", tone: "good" } },
@@ -452,7 +480,7 @@ describe("lockpicking in a campaign", () => {
         const seen: unknown[] = [];
         context = { ...context, page: { choose: async () => (seen.push((await widgets())[0].shows?.parts?.[1]), 0) } };
         await pick();
-        const pins = { label: "Pins", max: 4, look: "steps", stage: "center" };
+        const pins = { label: "Pins", max: 4, look: "steps", stage: "center", figure: "tumblers" };
         expect(seen).toEqual([{ track: { ...pins, value: 0, coming: 4 } }, { track: { ...pins, value: 0, held: 3, marked: 1 } }]);
         await ok("advance", "--to", "day 1, 10:00");
         expect((await widgets())[0].shows?.parts?.[0]).toMatchObject({ lead: "Open" });
