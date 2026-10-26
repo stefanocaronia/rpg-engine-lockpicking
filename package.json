@@ -30,7 +30,7 @@
   },
   "rpg-engine": {
     "kind": "extension",
-    "api": 4,
+    "api": 5,
     "page": "dist/page.js"
   },
   "engines": {

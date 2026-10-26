@@ -1,7 +1,7 @@
 // The lockpicking extension's code: lockpicking reads a lock and who would pick it; lockpicking-pick makes an attempt, the player's roll asked with ask, a
 // companion's in view, anyone else's behind the screen, the ones rerolled in the same call, and writes what it did to the lock; on the dashboard, the attempt
 // of the party. The rules are in lock.ts.
-import type { AskedRoll, ExtensionEntry, ExtensionKit, Game, GamePage, GameView, Track, Widget, WidgetText } from "rpg-engine";
+import type { AskedRoll, Game, GamePage, GameView, PackageEntry, PackageKit, Track, Widget, WidgetText } from "rpg-engine";
 import { canReroll, complexity, diceToRoll, failureOf, failuresToJam, needsTools, onesIn, rerollsLeft, rerollsPerAttempt, rogueReduction, roundedDc, timeOf } from "./lock.ts";
 import { tumblersOf } from "./tumblers.ts";
 
@@ -80,9 +80,9 @@ interface Decision
 
 const rerollsField = "lockpicking-rerolls";
 // The faces of physical dice, as the command line writes them: 3,5,6.
-const faceList = (z: ExtensionKit["z"]) => z.preprocess((value) => (typeof value === "string" ? value.split(/[\s,;]+/).filter(Boolean).map(Number) : value), z.array(z.int().min(1).max(6)));
+const faceList = (z: PackageKit["z"]) => z.preprocess((value) => (typeof value === "string" ? value.split(/[\s,;]+/).filter(Boolean).map(Number) : value), z.array(z.int().min(1).max(6)));
 
-const lockpicking: ExtensionEntry = ({ z }) => ({
+const lockpicking: PackageEntry = ({ z }) => ({
     commands: [
         {
             name: "lockpicking",
@@ -418,7 +418,8 @@ function spendRerolls(pick: Pick, ones: number): void
     pick.attempt = { ...pick.attempt, rerolled: (pick.attempt.rerolled ?? 0) + ones };
 
     if (picker.page !== undefined && left !== rerollsOf(picker)) {
-        pick.game.set(picker.page.name, { [rerollsField]: left }, "lockpicking rerolls");
+        // A counter the rules watch is changed, never just written (API 5).
+        pick.game.change(picker.page.name, rerollsField, { to: left }, "lockpicking rerolls");
         picker.page = pick.game.page(picker.page.name) ?? picker.page;
     }
 }
