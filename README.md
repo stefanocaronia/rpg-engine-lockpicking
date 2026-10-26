@@ -10,7 +10,7 @@ From a campaign, with RPG Engine 0.6.0 or later: `rpg package install lockpickin
 
 ## On the dashboard
 
-Its code in the dashboard's page, `src/page.tsx` built to `dist/page.js`, draws the cylinder of the card and the widget from the data its hook gives (`src/tumblers.ts`): the pins, those lifted, held and marked, the pick, the outcome. It needs RPG Engine 0.6.0 or later, the extension API 4.
+Its code in the dashboard's page, `src/page.tsx` built to `dist/page.js`, draws the cylinder of the card and the widget from the data its hook gives (`src/tumblers.ts`): a chamber for each die with its spring and pins, a pin passed caught over the shear line, one held half way, a 1 marked, and a pick of a fixed length that slides under the pin it works on, out of the lock once it opens. Its pins rise once the dice land and fall back at a failure, and nothing moves with reduced motion; right to left the cylinder is mirrored. Who picks, the rerolls and the failures in a row are the dashboard's own parts beside it. It needs RPG Engine 0.6.0 or later, the extension API 4.
 
 ## The odds
 

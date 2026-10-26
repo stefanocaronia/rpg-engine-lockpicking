@@ -16,11 +16,11 @@ export interface Tumblers
     coming: number;
     /** The place of the pin the pick works on; null once the lock is open, the pick out of the cylinder. */
     pick: number | null;
-    /** How the attempt ended: open, or failed, the spring having taken every pin back. */
+    /** How the attempt ended: open, or failed, the spring having taken every pin back, the 1s that did it still marked. */
     outcome?: "open" | "failed";
 }
 
-/** An attempt as the cylinder reads it: its dice and those passed, the 1s of a roll waiting for their decision, whether it is a fight, how it ended. */
+/** An attempt as the cylinder reads it: its dice and those passed, the 1s of its last roll (waiting for their decision, or that failed it), whether it is a fight, how it ended. */
 export interface TumblersOf
 {
     dice: number;
@@ -39,19 +39,27 @@ export function tumblersOf(attempt: TumblersOf): Tumblers
         return { pins, up: pins, held: 0, ones: [], coming: 0, pick: null, outcome: "open" };
     }
 
+    // Failed, every pin back down; the 1s that made it fail marked where they fell, the pick under the first.
     if (attempt.outcome === "failed") {
-        return { pins, up: 0, held: 0, ones: [], coming: 0, pick: 0, outcome: "failed" };
+        const ones = attempt.pending === undefined ? [] : onesOf(pins, Math.min(pins, attempt.passed), attempt.pending).ones;
+        return { pins, up: 0, held: 0, ones, coming: 0, pick: ones[0] ?? 0, outcome: "failed" };
     }
 
     const up = Math.min(pins, attempt.passed);
 
     if (attempt.pending !== undefined) {
-        const held = Math.max(0, Math.min(pins - up, attempt.pending.rolled - attempt.pending.ones));
-        const count = Math.max(0, Math.min(pins - up - held, attempt.pending.ones));
-        const ones = Array.from({ length: count }, (_, index) => up + held + index);
+        const { held, ones } = onesOf(pins, up, attempt.pending);
         return { pins, up, held, ones, coming: 0, pick: ones[0] ?? up + held };
     }
 
     const left = pins - up;
     return { pins, up, held: 0, ones: [], coming: attempt.fight ? Math.min(2, left) : left, pick: up };
+}
+
+/** The pins of a roll after those up: those that held, then the places of its 1s. */
+function onesOf(pins: number, up: number, pending: { ones: number; rolled: number; }): { held: number; ones: number[]; }
+{
+    const held = Math.max(0, Math.min(pins - up, pending.rolled - pending.ones));
+    const count = Math.max(0, Math.min(pins - up - held, pending.ones));
+    return { held, ones: Array.from({ length: count }, (_, index) => up + held + index) };
 }

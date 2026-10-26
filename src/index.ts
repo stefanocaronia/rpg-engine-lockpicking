@@ -33,7 +33,7 @@ interface State
     attempts?: Record<string, Attempt>;
     /** How many attempts began, which names the card of each on the dashboard without naming its lock. */
     begun?: number;
-    last?: { lock: string; who: string; dice: number; passed: number; outcome: "open" | "failed"; scene?: string; card?: string; };
+    last?: { lock: string; who: string; dice: number; passed: number; outcome: "open" | "failed"; scene?: string; card?: string; pending?: { ones: number; rolled: number; }; };
 }
 
 /** A lock as its page has it. */
@@ -245,6 +245,8 @@ async function settle(pick: Pick, rolled: number, ones: number, decision: Decisi
 
     while (left > 0) {
         const rerolls = spendable(pick);
+        // The 1s of this roll, kept for the cylinder of a failure as for a decision.
+        pick.attempt = { ...pick.attempt, pending: { ones: left, rolled } };
 
         if (!canReroll(left, rerolls)) {
             return failed(pick, `${onesText(left)}${uncoveredText(pick, left, rerolls)}`);
@@ -255,7 +257,6 @@ async function settle(pick: Pick, rolled: number, ones: number, decision: Decisi
         }
 
         // Kept before asking: a call stopped meanwhile leaves the ones waiting, never forgotten.
-        pick.attempt = { ...pick.attempt, pending: { ones: left, rolled } };
         save(pick.game, pick.lock.page.name, pick.attempt);
         const faces = await rerolled(pick, left, rerollsOf(pick.picker), given);
         given = {};
@@ -399,6 +400,8 @@ function end(game: Game, lock: string, attempt: Attempt, outcome: "open" | "fail
         dice: attempt.dice,
         passed: outcome === "open" ? attempt.dice : attempt.passed,
         outcome,
+        // The 1s that failed it, for its cylinder to mark where they fell.
+        ...(outcome === "failed" && attempt.pending !== undefined ? { pending: { ones: attempt.pending.ones, rolled: attempt.pending.rolled } } : {}),
         ...(attempt.scene === undefined ? {} : { scene: attempt.scene }),
         ...(attempt.card === undefined ? {} : { card: attempt.card }),
     };
@@ -687,8 +690,8 @@ function lockWidget(game: GameView, card?: string): Widget | undefined
     ].filter((fact) => fact !== undefined);
     const rerolls = game.page(shown.who)?.counter(rerollsField);
     const rerollsMax = Math.min(100, rerolls?.max ?? 0);
-    // Under the card's title, Lock: who picks it while they do, then how it went; the failures until it opens.
-    const lead = shown.outcome === undefined ? shown.who : shown.outcome === "open" ? "Open" : "Failed";
+    // Who picks it, always (D-509); once it ended, how it went; the failures until it opens.
+    const lead = shown.outcome === "open" ? "Open" : "Failed";
     // Who is not proficient with thieves' tools jams it sooner (D-508); a stranger with no page is taken to be proficient.
     const proficient = (game.page(shown.who)?.formula("has(tool-proficiencies, thieves' tools)") ?? 1) > 0;
     const dc = lock?.value("lock-dc");
@@ -698,7 +701,8 @@ function lockWidget(game: GameView, card?: string): Widget | undefined
         // The cylinder its page code draws from these, never the lock's name nor its DC (D-509, D-510).
         data: tumblersOf({ dice: shown.dice, passed: shown.passed, ...("pending" in shown && shown.pending !== undefined ? { pending: shown.pending } : {}), fight: inFight(game), ...(shown.outcome === undefined ? {} : { outcome: shown.outcome }) }),
         parts: [
-            { lead, icon: shown.outcome === "open" ? "lock-open" : "lock", ...tone },
+            ...(shown.outcome === undefined ? [] : [{ lead, icon: shown.outcome === "open" ? "lock-open" : "lock", ...tone }]),
+            { who: shown.who, does: "picks" },
             ...(shown.dice === 0 ? [] : [{ track: { ...pinsOf(game, shown), figure: "tumblers" } }]),
             ...(shown.outcome === "open" ? [] : [{ track: { label: "Failures", value: failures, max: jamsAt, look: "pips" as const, stage: "end" as const, tone: "bad" as const } }]),
             ...(facts.length === 0 ? [] : [{ facts }]),

@@ -25,6 +25,8 @@ words:
   A 1: Un 1
   "{ones} ones": "{ones} volte 1"
   Lock: Serratura
+  # What who picks a lock does, after their name in the card: Ettore scassina.
+  picks: scassina
   Open: Aperta
   Failed: Fallita
   Pins: Perni

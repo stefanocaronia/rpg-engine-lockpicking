@@ -129,6 +129,7 @@ describe("the cylinder the page code draws (D-509, D-510)", () => {
             [{ dice: 4, passed: 0, pending: { ones: 2, rolled: 4 }, fight: false }, { pins: 4, up: 0, held: 2, ones: [2, 3], coming: 0, pick: 2 }],
             [{ dice: 4, passed: 2, fight: false, outcome: "open" }, { pins: 4, up: 4, held: 0, ones: [], coming: 0, pick: null, outcome: "open" }],
             [{ dice: 6, passed: 4, fight: true, outcome: "failed" }, { pins: 6, up: 0, held: 0, ones: [], coming: 0, pick: 0, outcome: "failed" }],
+            [{ dice: 6, passed: 2, pending: { ones: 1, rolled: 2 }, fight: true, outcome: "failed" }, { pins: 6, up: 0, held: 0, ones: [3], coming: 0, pick: 3, outcome: "failed" }],
         ];
 
         for (const [attempt, cylinder] of cases) {
@@ -245,7 +246,7 @@ describe("lockpicking in a campaign", () => {
         expect(card).toMatchObject({ id: "lockpicking.lock", place: "side", title: "Lock", module: "/pkg/%40rpgengine%2Flockpicking/0.2.0/page.js", figures: { tumblers: { width: 360, height: 105, mirror: true } } });
         expect(card.shows?.data).toEqual({ pins: 4, up: 2, held: 0, ones: [], coming: 2, pick: 2 });
         expect(card.shows?.parts).toEqual([
-            { lead: "Bruna", icon: expect.stringMatching(/^M7 11V8a5 5 0 0 1 10 0/) },
+            { who: "Bruna", does: "picks" },
             { track: { label: "Pins", value: 2, max: 4, look: "steps", stage: "center", coming: 2, figure: "tumblers" } },
             { track: { label: "Failures", value: 0, max: 4, look: "pips", stage: "end", tone: "bad" } },
             { text: { text: "{left} to go", values: { left: 2 } } },
@@ -259,7 +260,7 @@ describe("lockpicking in a campaign", () => {
         await ok("config", "language", "it");
         expect((await widgets())[0]).toMatchObject({
             title: "Serratura",
-            shows: { parts: [{ lead: "Aperta" }, { track: { label: "Perni", value: 4, max: 4 } }, { track: { label: "Ritiri" } }] },
+            shows: { parts: [{ lead: "Aperta" }, { who: "Bruna", does: "scassina" }, { track: { label: "Perni", value: 4, max: 4 } }, { track: { label: "Ritiri" } }] },
         });
         await ok("scene", "close", "--summary", "The door gave way.");
         expect((await widgets())[0].shows).toBeUndefined();
@@ -273,6 +274,7 @@ describe("lockpicking in a campaign", () => {
         await ok("lockpicking-pick", door, "--who", "Lena");
         expect((await widgets())[0].shows?.parts).toEqual([
             { lead: "Failed", icon: expect.stringMatching(/^M7 11V8a5 5 0 0 1 10 0/), tone: "bad" },
+            { who: "Lena", does: "picks" },
             { track: { label: "Pins", value: 0, max: 6, look: "steps", stage: "center", figure: "tumblers" } },
             { track: { label: "Failures", value: 2, max: 4, look: "pips", stage: "end", tone: "bad" } },
             { facts: ["Signs of tampering"] },
@@ -462,7 +464,7 @@ describe("lockpicking in a campaign", () => {
         const seen: unknown[] = [];
         context = { ...context, page: { choose: async () => (seen.push((await widgets())[0].shows?.parts?.[0]), 0) } };
         await pick();
-        expect(seen).toEqual([{ lead: "Bruna", icon: expect.any(String) }]);
+        expect(seen).toEqual([{ who: "Bruna", does: "picks" }]);
         expect((await widgets())[0].shows?.parts?.[0]).toMatchObject({ lead: "Open" });
         await ok("advance", "--to", "day 1, 10:00");
         expect((await widgets())[0].shows).toBeUndefined();
@@ -552,7 +554,7 @@ describe("lockpicking in a campaign", () => {
         const keys: (string | undefined)[] = [];
         context = { ...context, page: { choose: async (_question, _title, _labels, _signal, rows) => (keys.push(rows?.card?.key), before.push(await rows?.card?.shows()), 0) } };
         await pick();
-        expect(JSON.stringify(before[0])).toContain('"lead":"Bruna"');
+        expect(JSON.stringify(before[0])).toContain('"who":"Bruna"');
         expect(JSON.stringify(before[0])).not.toContain("Lena");
 
         await ok("lockpicking-pick", door);
