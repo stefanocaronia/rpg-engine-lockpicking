@@ -2,7 +2,7 @@
 // companion's in view, anyone else's behind the screen, the ones rerolled in the same call, and writes what it did to the lock; on the dashboard, the attempt
 // of the party. The rules are in lock.ts.
 import type { AskedRoll, ExtensionEntry, ExtensionKit, Game, GamePage, GameView, Track, Widget, WidgetText } from "rpg-engine";
-import { canReroll, complexity, diceToRoll, failureOf, mostFailures, needsTools, onesIn, rerollsLeft, rogueReduction, roundedDc, timeOf } from "./lock.ts";
+import { canReroll, complexity, diceToRoll, failureOf, failuresToJam, needsTools, onesIn, rerollsLeft, rerollsPerAttempt, rogueReduction, roundedDc, timeOf } from "./lock.ts";
 
 /**
  * An attempt in progress on a lock, by its page's name: who picks it, the dice it needs and those passed, the scene it began in, the words the player is asked in, whether the player was asked in words to go ahead, which the next call rolls, and the ones of a
@@ -20,6 +20,10 @@ interface Attempt
     check?: string;
     asked?: boolean;
     pending?: { ones: number; rolled: number; physical?: boolean; };
+    /** The rerolls it spent so far, of the one or two it may (D-508). */
+    rerolled?: number;
+    /** The tool of who is not proficient with thieves' tools, from their inventory (D-508). */
+    tool?: string;
 }
 
 /** What the extension keeps: the attempts in progress, and the last one that ended, for the dashboard while its scene lasts. */
@@ -48,6 +52,9 @@ interface Picker
     name: string;
     page?: GamePage;
     pc: boolean;
+    /** Proficient with thieves' tools, as a stranger with no page is taken to be; with expertise in them (D-508). */
+    proficient: boolean;
+    expertise: boolean;
 }
 
 /** An attempt as one call makes it, whether it begins with it, and the rerolls it spent. */
@@ -79,7 +86,7 @@ const lockpicking: ExtensionEntry = ({ z }) => ({
         {
             name: "lockpicking",
             description: "A lock as lockpicking reads it, before or during an attempt: its complexity, the d6 who picks it rolls and the rounds they take, whether "
-                + "thieves' tools are needed, its failures in a row and what they did, the attempt in progress and the rerolls of who picks it. Read-only. "
+                + "a tool is needed, its failures in a row and what they did, the attempt in progress and the rerolls of who picks it. Read-only. "
                 + 'Example: lockpicking "Porta della cripta", who Bruna.',
             input: z.object({
                 lock: z.string().min(1).describe("the page of the lock, a door, a chest or manacles"),
@@ -96,12 +103,14 @@ const lockpicking: ExtensionEntry = ({ z }) => ({
             name: "lockpicking-pick",
             description: "An attempt to pick a lock with d6, in place of the d20 check with thieves' tools: the player's character rolls through ask, a companion in view, "
                 + "anyone else behind the screen. Outside a fight it rolls every die left; in a fight two, called again at each of their actions. A 1 resets the lock "
-                + "unless rerolls cover every 1, which the player chooses in the same call. It writes the failures and the lock's state. "
+                + "unless rerolls cover every 1, which the player chooses in the same call. Who is not proficient with thieves' tools rolls four dice a step, "
+                + "without rerolls, with a tool of their inventory you allow, given as tool. It writes the failures and the lock's state. "
                 + "question and check in the player's language, never naming a secret lock. "
                 + 'Example: lockpicking-pick "Porta della cripta", question "Forzare la serratura prima della ronda", check Scasso.',
             input: z.object({
                 lock: z.string().min(1).describe("the page of the lock, with lock-dc written on it"),
                 who: z.string().optional().describe("who is picking it, else the player's character"),
+                tool: z.string().optional().describe("for who is not proficient with thieves' tools, the item of their inventory they pick it with, as a knife or a screwdriver"),
                 question: z.string().optional().describe("for the player's roll, what is at stake, in their language, as ask's question; kept for the next calls"),
                 check: z.string().optional().describe("the roll's name the player sees, in their language, such as Scasso; kept for the next calls"),
                 values: faceList(z).optional().describe("the faces of physical dice, as the player tells them: of the dice, or of the rerolls when asked"),
@@ -133,7 +142,7 @@ const lockpicking: ExtensionEntry = ({ z }) => ({
 export default lockpicking;
 
 /** An attempt by its input: stopped, a decision on the ones, or the dice of this call. */
-async function attempt(game: Game, input: { lock: string; who?: string; question?: string; check?: string; values?: number[]; reroll?: boolean; stop?: boolean; }): Promise<string>
+async function attempt(game: Game, input: { lock: string; who?: string; tool?: string; question?: string; check?: string; values?: number[]; reroll?: boolean; stop?: boolean; }): Promise<string>
 {
     const lock = lockOf(game, input.lock);
     const held = stateOf(game).attempts?.[lock.page.name];
@@ -152,7 +161,8 @@ async function attempt(game: Game, input: { lock: string; who?: string; question
         throw new Error(`${held.who} is picking ${lock.page.name}: go on with who ${held.who}, or break it off first with stop.`);
     }
 
-    const begun: Attempt = held ?? { who: picker.name, dice: diceOf(lock, picker), passed: 0, card: newCard(game), ...sceneOf(game) };
+    const tool = held === undefined ? toolOf(picker, input.tool) : held.tool;
+    const begun: Attempt = held ?? { who: picker.name, dice: diceOf(lock, picker), passed: 0, card: newCard(game), ...sceneOf(game), ...(tool === undefined ? {} : { tool }) };
     const question = wordsOr(input.question, begun.question ?? "Pick the lock: a 1 resets it");
     const check = wordsOr(input.check, begun.check ?? "Lockpicking");
     const pick: Pick = { game, lock, picker, attempt: { ...begun, question, check }, question, check, fresh: held === undefined, spent: 0 };
@@ -233,11 +243,10 @@ async function settle(pick: Pick, rolled: number, ones: number, decision: Decisi
     let given = decision;
 
     while (left > 0) {
-        const rerolls = rerollsOf(pick.picker);
+        const rerolls = spendable(pick);
 
         if (!canReroll(left, rerolls)) {
-            const why = rerolls === 0 ? (emptyText(pick.picker) === "" ? "" : `, and no reroll is left${emptyText(pick.picker)}`) : `, and ${rerollsText(rerolls)} cannot cover ${left}, so none is spent`;
-            return failed(pick, `${onesText(left)}${why}`);
+            return failed(pick, `${onesText(left)}${uncoveredText(pick, left, rerolls)}`);
         }
 
         if (given.reroll === false) {
@@ -247,7 +256,7 @@ async function settle(pick: Pick, rolled: number, ones: number, decision: Decisi
         // Kept before asking: a call stopped meanwhile leaves the ones waiting, never forgotten.
         pick.attempt = { ...pick.attempt, pending: { ones: left, rolled } };
         save(pick.game, pick.lock.page.name, pick.attempt);
-        const faces = await rerolled(pick, left, rerolls, given);
+        const faces = await rerolled(pick, left, rerollsOf(pick.picker), given);
         given = {};
 
         if (faces === "declined") {
@@ -349,7 +358,7 @@ function opened(pick: Pick, said: string): string
 function failed(pick: Pick, why: string): string
 {
     const { game, lock, picker, attempt } = pick;
-    const failure = failureOf(lock.failures + 1);
+    const failure = failureOf(lock.failures + 1, lock.dc, picker.proficient);
     const values = {
         "lock-failures": failure.failures,
         ...(failure.tampered ? { "lock-tampered": "yes" } : {}),
@@ -361,13 +370,13 @@ function failed(pick: Pick, why: string): string
     // The player's character makes the check for the tools as every roll of theirs, through ask (D-500).
     const checked = picker.pc ? `with ask, as Dexterity 1d20+dex-mod` : "with roll";
     const does = failure.jammed
-        ? `it is jammed and no one picks it any more. Ask ${picker.name} for a Dexterity check against DC ${lock.dc} ${checked}: if it fails, the thieves' tools break; take them from the inventory. Then it is forced or broken by the system's rules, opened by Knock or mended by a smith, as you rule`
+        ? `it is jammed and no one picks it any more. Ask ${picker.name} for a Dexterity check against DC ${lock.dc} ${checked}: if it fails, ${attempt.tool === undefined ? "the thieves' tools break; take them" : `the ${attempt.tool} breaks; take it`} from the inventory. Then it is forced or broken by the system's rules, opened by Knock or mended by a smith, as you rule`
         : failure.worn
         ? "the mechanism is getting ruined: its complexity goes up by 1 (lock-worn)"
         : failure.tampered
         ? "it now shows signs of tampering, which whoever looks at it later notices (lock-tampered)"
         : "it resets, and the next attempt starts over";
-    return `${picker.name} fails ${lock.page.name}: ${why}${spentText(pick)}. Failure ${failure.failures} of ${mostFailures} in a row: ${does}.${timeText(game, attempt)}`;
+    return `${picker.name} fails ${lock.page.name}: ${why}${spentText(pick)}. Failure ${failure.failures} of ${failuresToJam(lock.dc, picker.proficient)} in a row: ${does}.${timeText(game, attempt)}`;
 }
 
 /** An attempt broken off: lost, and no failure. */
@@ -402,6 +411,7 @@ function spendRerolls(pick: Pick, ones: number): void
     const { picker } = pick;
     const left = rerollsLeft(ones, rerollsOf(picker));
     pick.spent += ones;
+    pick.attempt = { ...pick.attempt, rerolled: (pick.attempt.rerolled ?? 0) + ones };
 
     if (picker.page !== undefined && left !== rerollsOf(picker)) {
         pick.game.set(picker.page.name, { [rerollsField]: left }, "lockpicking rerolls");
@@ -520,14 +530,68 @@ function pickerOf(game: GameView, given: string | undefined): Picker
         throw new Error(`${name} names no page: give who as their page's name, ${meant.name}. Nothing was rolled.`);
     }
 
-    return page === undefined ? { name, pc: false } : { name: page.name, page, pc: page.pc };
+    if (page === undefined) {
+        return { name, pc: false, proficient: true, expertise: false };
+    }
+
+    const has = (list: string): boolean => (page.formula(`has(${list}, thieves' tools)`) ?? 0) > 0;
+    return { name: page.name, page, pc: page.pc, proficient: has("tool-proficiencies"), expertise: has("expertise") };
+}
+
+/**
+ * The tool of who is not proficient with thieves' tools (D-508): one of their inventory, which the master names; refused without one, as the lock is then
+ * forced or broken. Who is proficient needs none named.
+ */
+function toolOf(picker: Picker, given: string | undefined): string | undefined
+{
+    if (picker.proficient || picker.page === undefined) {
+        return undefined;
+    }
+
+    const plain = (text: string): string => text.normalize("NFD").replace(/\p{M}/gu, "").replace(/[’‘]/g, "'").toLowerCase().trim();
+    const inventory = picker.page.value("inventory");
+    const carried = (Array.isArray(inventory) ? inventory : typeof inventory === "string" ? [inventory] : [])
+        .map((item) => plain(item.replace(/^\[\[([^\]|]+)(\|[^\]]*)?\]\]/, "$1").replace(/\s*[x×]?\d+$/, "")));
+
+    if (given === undefined || given.trim() === "") {
+        throw new Error(
+            `${picker.name} is not proficient with thieves' tools: give tool, an item of their inventory to pick it with, as thieves' tools, a knife or a screwdriver, as you allow. With none, no one picks it: it is forced or broken by the system's rules.`,
+        );
+    }
+
+    if (!carried.includes(plain(given))) {
+        throw new Error(`${picker.name} carries no ${given.trim()}: give tool as an item of their inventory, or force or break the lock by the system's rules. Nothing was rolled.`);
+    }
+
+    return given.trim();
 }
 
 /** The d6 who picks this lock rolls: its complexity, worn included, less what a rogue's Dexterity takes away. */
 function diceOf(lock: Lock, picker: Picker): number
 {
     const rogue = (picker.page?.formula("item(classes, Rogue)") ?? 0) > 0;
-    return diceToRoll(complexity(lock.dc, lock.worn), rogueReduction(picker.page?.formula("dex-mod") ?? 0, rogue));
+    return diceToRoll(complexity(lock.dc, lock.worn), rogueReduction(picker.page?.formula("dex-mod") ?? 0, rogue), picker.proficient);
+}
+
+/** The rerolls this attempt may still spend: of the character's, one in all, two with expertise, none without proficiency (D-508). */
+function spendable(pick: Pick): number
+{
+    const most = rerollsPerAttempt(pick.picker.proficient, pick.picker.expertise);
+    return Math.max(0, Math.min(rerollsOf(pick.picker), most - (pick.attempt.rerolled ?? 0)));
+}
+
+/** Why the rerolls cover not the ones: none left to the character, none more this attempt may spend, or too few for them all. */
+function uncoveredText(pick: Pick, ones: number, rerolls: number): string
+{
+    if (rerolls > 0) {
+        return `, and ${rerollsText(rerolls)} cannot cover ${ones}, so none is spent`;
+    }
+
+    if (!pick.picker.proficient) {
+        return "";
+    }
+
+    return rerollsOf(pick.picker) > 0 ? ", and this attempt has spent the rerolls it may" : emptyText(pick.picker) === "" ? "" : `, and no reroll is left${emptyText(pick.picker)}`;
 }
 
 /** That rerolls spent to the last come back with a short rest; nothing while some are left, or for who has none to spend. */
@@ -550,11 +614,15 @@ function lockText(game: GameView, lock: Lock, picker: Picker): string
     const dice = held?.dice ?? diceOf(lock, picker);
     const { rounds, seconds } = timeOf(dice);
     const worn = lock.worn > 0 ? `, ${lock.worn} of it from wear` : "";
-    const tools = needsTools(lock.dc) ? "thieves' tools needed" : "no tools needed";
+    const tools = !picker.proficient
+        ? `${picker.name}, not proficient with thieves' tools, needs a tool of their inventory, rolls 4 dice a step without rerolls, and jams it at the ${failuresToJam(lock.dc, false) === 1 ? "first failure" : "second failure in a row"}`
+        : needsTools(lock.dc)
+        ? "thieves' tools needed"
+        : "no tools needed";
     const done = [lock.tampered ? "signs of tampering" : undefined, lock.state].filter((fact) => fact !== undefined);
     const lines = [
-        `${lock.page.name}: DC ${lock.dc} (${roundedDc(lock.dc)}), complexity ${steps}${worn}; ${tools}. Failures in a row: ${lock.failures} of ${mostFailures}${done.length === 0 ? "" : `; ${done.join(", ")}`}.`,
-        dice === 0 ? `${picker.name} opens it with an action, without a roll.` : `${picker.name} rolls ${dice}d6, in ${rounds} round${rounds === 1 ? "" : "s"} (${seconds} s), with ${rerollsText(rerollsOf(picker))}${emptyText(picker)}.`,
+        `${lock.page.name}: DC ${lock.dc} (${roundedDc(lock.dc)}), complexity ${steps}${worn}; ${tools}. Failures in a row: ${lock.failures} of ${failuresToJam(lock.dc, picker.proficient)}${done.length === 0 ? "" : `; ${done.join(", ")}`}.`,
+        dice === 0 ? `${picker.name} opens it with an action, without a roll.` : `${picker.name} rolls ${dice}d6, in ${rounds} round${rounds === 1 ? "" : "s"} (${seconds} s), with ${rerollsText(rerollsOf(picker))}${emptyText(picker)}${picker.proficient ? `, ${rerollsPerAttempt(true, picker.expertise)} an attempt at most` : ""}.`,
     ];
 
     if (held !== undefined) {
@@ -565,7 +633,6 @@ function lockText(game: GameView, lock: Lock, picker: Picker): string
     return [...lines, lock.state === "open" || lock.state === "jammed" ? "Nothing to pick." : `Next: lockpicking-pick ${quoted(lock.page.name)}${picker.pc ? "" : `, who ${picker.name}`}.`].join("\n");
 }
 
-/** The pins up in an attempt: those passed, and while a 1 waits for its decision, the dice of that roll that held. */
 /** What an attempt left half way still needs, as its card says it once the call ends: "2 to go". */
 function leftText(shown: { dice: number; passed: number; pending?: Attempt["pending"]; outcome?: "open" | "failed"; }): { text: WidgetText; }[]
 {
@@ -621,12 +688,16 @@ function lockWidget(game: GameView, card?: string): Widget | undefined
     const rerollsMax = Math.min(100, rerolls?.max ?? 0);
     // Under the card's title, Lock: who picks it while they do, then how it went; the failures until it opens.
     const lead = shown.outcome === undefined ? shown.who : shown.outcome === "open" ? "Open" : "Failed";
+    // Who is not proficient with thieves' tools jams it sooner (D-508); a stranger with no page is taken to be proficient.
+    const proficient = (game.page(shown.who)?.formula("has(tool-proficiencies, thieves' tools)") ?? 1) > 0;
+    const dc = lock?.value("lock-dc");
+    const jamsAt = failuresToJam(typeof dc === "number" ? dc : 15, proficient);
     const tone = shown.outcome === undefined ? {} : { tone: shown.outcome === "open" ? ("good" as const) : ("bad" as const) };
     return {
         parts: [
             { lead, icon: shown.outcome === "open" ? "lock-open" : "lock", ...tone },
             ...(shown.dice === 0 ? [] : [{ track: pinsOf(game, shown) }]),
-            ...(shown.outcome === "open" ? [] : [{ track: { label: "Failures", value: failures, max: mostFailures, look: "pips" as const, stage: "end" as const, tone: "bad" as const } }]),
+            ...(shown.outcome === "open" ? [] : [{ track: { label: "Failures", value: failures, max: jamsAt, look: "pips" as const, stage: "end" as const, tone: "bad" as const } }]),
             ...(facts.length === 0 ? [] : [{ facts }]),
             ...leftText(shown),
             ...(rerolls === undefined || rerollsMax === 0

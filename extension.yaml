@@ -13,9 +13,10 @@ fields:
   lock-tampered: text
   lock-state: text
   lockpicking-rerolls: counter
-# The rerolls of who is proficient with thieves' tools, as many as the proficiency bonus, twice with expertise in them; back with a short rest, and so a long one.
+# The rerolls of who is proficient with thieves' tools, as many as the proficiency bonus, back with a short rest, and so a long one; an attempt spends one at
+# most, two with expertise in them (D-508).
 counters:
-  lockpicking-rerolls: {max: "has(tool-proficiencies, thieves' tools) * proficiency * (1 + has(expertise, thieves' tools))", refill: short rest}
+  lockpicking-rerolls: {max: "has(tool-proficiencies, thieves' tools) * proficiency", refill: short rest}
 icons:
   lock: "M7 11V8a5 5 0 0 1 10 0v3 M5 11h14v10H5Z M12 15v2"
   lock-open: "M7 11V8a5 5 0 0 1 9.6-2 M5 11h14v10H5Z M12 15v2"

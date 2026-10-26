@@ -38,7 +38,8 @@
   "scripts": {
     "build": "tsc",
     "lint": "tsc --noEmit -p tsconfig.test.json",
-    "test": "npm run build && vitest run"
+    "test": "npm run build && vitest run",
+    "odds": "npm run build && node scripts/odds.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",
