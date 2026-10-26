@@ -24,6 +24,7 @@ words:
   "A 1": "1が出た"
   "{ones} ones": "1が{ones}個"
   Lock: 錠前
+  picks: 解錠中
   Open: 解錠
   Failed: 失敗
   Pins: ピン

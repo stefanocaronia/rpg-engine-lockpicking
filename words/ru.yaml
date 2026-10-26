@@ -24,6 +24,7 @@ words:
   "A 1": "Единица"
   "{ones} ones": "Единиц: {ones}"
   Lock: Замок
+  picks: взламывает замок
   Open: Открыт
   Failed: Провал
   Pins: Штифты

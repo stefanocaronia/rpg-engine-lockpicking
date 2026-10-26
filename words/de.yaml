@@ -24,6 +24,7 @@ words:
   "A 1": "Eine 1"
   "{ones} ones": "{ones}-mal die 1"
   Lock: Schloss
+  picks: knackt das Schloss
   Open: Offen
   Failed: Gescheitert
   Pins: Stifte

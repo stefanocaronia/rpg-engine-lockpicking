@@ -24,6 +24,7 @@ words:
   "A 1": "掷出1"
   "{ones} ones": "{ones}个1"
   Lock: 锁
+  picks: 正在开锁
   Open: 已打开
   Failed: 失败
   Pins: 弹子

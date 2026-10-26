@@ -24,6 +24,7 @@ words:
   "A 1": "Een 1"
   "{ones} ones": "{ones} enen"
   Lock: Slot
+  picks: opent het slot
   Open: Open
   Failed: Mislukt
   Pins: Pinnen

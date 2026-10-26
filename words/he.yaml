@@ -24,6 +24,7 @@ words:
   "A 1": "יצא 1"
   "{ones} ones": "{ones} פעמים 1"
   Lock: מנעול
+  picks: פריצת המנעול
   Open: פתוח
   Failed: כישלון
   Pins: פינים

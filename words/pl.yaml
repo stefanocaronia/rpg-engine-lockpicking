@@ -24,6 +24,7 @@ words:
   "A 1": "Jedynka"
   "{ones} ones": "Jedynek: {ones}"
   Lock: Zamek
+  picks: otwiera zamek wytrychem
   Open: Otwarty
   Failed: Porażka
   Pins: Piny

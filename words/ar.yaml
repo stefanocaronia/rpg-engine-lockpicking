@@ -24,6 +24,7 @@ words:
   "A 1": "ظهر 1"
   "{ones} ones": "عدد الـ1: {ones}"
   Lock: القفل
+  picks: في محاولة لفتح القفل
   Open: مفتوح
   Failed: إخفاق
   Pins: المسامير

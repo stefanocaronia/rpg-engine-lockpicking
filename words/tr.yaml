@@ -24,6 +24,7 @@ words:
   "A 1": "Bir 1"
   "{ones} ones": "{ones} tane 1"
   Lock: Kilit
+  picks: kilidi açıyor
   Open: Açıldı
   Failed: Başarısız
   Pins: Pimler

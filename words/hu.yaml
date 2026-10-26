@@ -24,6 +24,7 @@ words:
   "A 1": "Egy 1-es"
   "{ones} ones": "{ones} darab 1-es"
   Lock: Zár
+  picks: zárat nyit
   Open: Nyitva
   Failed: Kudarc
   Pins: Csapok

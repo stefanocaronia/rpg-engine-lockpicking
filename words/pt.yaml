@@ -24,6 +24,7 @@ words:
   "A 1": "Um 1"
   "{ones} ones": "{ones} uns"
   Lock: Fechadura
+  picks: força a fechadura
   Open: Aberta
   Failed: Falhou
   Pins: Pinos

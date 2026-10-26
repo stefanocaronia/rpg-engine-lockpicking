@@ -24,6 +24,7 @@ words:
   "A 1": "Ykkönen"
   "{ones} ones": "{ones} ykköstä"
   Lock: Lukko
+  picks: tiirikoi lukkoa
   Open: Auki
   Failed: Epäonnistui
   Pins: Tapit

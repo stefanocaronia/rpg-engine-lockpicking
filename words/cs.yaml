@@ -24,6 +24,7 @@ words:
   "A 1": "Jednička"
   "{ones} ones": "Jedniček: {ones}"
   Lock: Zámek
+  picks: páčí zámek
   Open: Otevřen
   Failed: Neúspěch
   Pins: Stavítka

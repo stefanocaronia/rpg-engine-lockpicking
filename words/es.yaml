@@ -24,6 +24,7 @@ words:
   "A 1": "Un 1"
   "{ones} ones": "{ones} unos"
   Lock: Cerradura
+  picks: fuerza la cerradura
   Open: Abierta
   Failed: Fallida
   Pins: Pines

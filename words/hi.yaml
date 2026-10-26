@@ -24,6 +24,7 @@ words:
   "A 1": "एक 1"
   "{ones} ones": "{ones} बार 1"
   Lock: ताला
+  picks: ताला खोलना
   Open: खुला
   Failed: विफल
   Pins: पिन

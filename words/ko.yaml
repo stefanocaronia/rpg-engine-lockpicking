@@ -24,6 +24,7 @@ words:
   "A 1": "1 나옴"
   "{ones} ones": "1이 {ones}개"
   Lock: 자물쇠
+  picks: 자물쇠 따는 중
   Open: 열림
   Failed: 실패
   Pins: 핀

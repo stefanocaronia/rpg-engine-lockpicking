@@ -24,6 +24,7 @@ words:
   "A 1": "Un 1"
   "{ones} ones": "{ones} fois 1"
   Lock: Serrure
+  picks: crochète la serrure
   Open: Ouverte
   Failed: Échec
   Pins: Goupilles
