@@ -1,6 +1,6 @@
 {
   "name": "@rpgengine/lockpicking",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lockpicking by complexity for RPG Engine, compatible with fifth edition: a lock is opened with d6 by its complexity, a 1 resets it, failures in a row ruin it, proficiency gives rerolls.",
   "type": "module",
   "main": "dist/index.js",
