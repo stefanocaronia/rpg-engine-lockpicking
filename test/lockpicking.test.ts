@@ -150,7 +150,6 @@ describe("lockpicking in a campaign", () => {
     // The extension's own folder, installed in each test campaign as the player's own.
     const extension = fileURLToPath(new URL("..", import.meta.url));
     let testing: TestCampaign;
-    let folder: string;
     let context: Context;
     // The buttons the player clicks, in turn: 0 rolls, 1 changes their mind.
     let clicks: number[];
@@ -185,7 +184,6 @@ describe("lockpicking in a campaign", () => {
 
     beforeEach(async () => {
         testing = await testCampaign({ system: "5e", extensions: [extension] });
-        folder = testing.folder;
         clicks = [];
         shown = [];
         buttons = [];
