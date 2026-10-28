@@ -6,7 +6,7 @@ This package works only inside [RPG Engine](https://github.com/stefanocaronia/rp
 
 ## Install
 
-From a campaign, with RPG Engine 0.6.0 or later: `rpg package install lockpicking`, or ask the master to install it. It needs a campaign of the fifth edition (the engine's `5e` system), and each lock its DC on its page first: `rpg write "Crypt door" --set lock-dc=15`.
+From a campaign, with RPG Engine 0.6.0 or later: `rpg package install lockpicking`, or ask the master to install it. It needs a campaign of the fifth edition, the `5e` system (`@rpgengine/system-5e`), and each lock its DC on its page first: `rpg write "Crypt door" --set lock-dc=15`.
 
 ## On the dashboard
 
@@ -28,7 +28,7 @@ Its code in the dashboard's page, `src/page.tsx` built to `dist/page.js`, draws 
 
 ## Develop and test
 
-You need Node 22.4 or later, and the engine for its test kit, `rpg-engine/testing`:
+You need Node 22.4 or later, the engine for its test kit, `rpg-engine/testing`, and the 5e system its campaigns play, `@rpgengine/system-5e`, both devDependencies:
 
 ```sh
 npm install
