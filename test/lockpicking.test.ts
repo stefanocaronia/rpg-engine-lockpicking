@@ -1,6 +1,7 @@
 // The lockpicking extension (D-257, D-505): the rules of complexity, failures and rerolls, and the extension in a campaign of the fifth edition, through the
 // engine's commands, with the dice given and the player's clicks faked.
 import fc from "fast-check";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { type Context, type Rows, type TestCampaign, testCampaign } from "rpg-engine/testing";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -146,6 +147,9 @@ describe("the cylinder the page code draws (D-509, D-510)", () => {
     });
 });
 
+// The version the page code is served by, as package.json gives it.
+const version = (JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")) as { version: string; }).version;
+
 describe("lockpicking in a campaign", () => {
     // The extension's own folder, installed in each test campaign as the player's own.
     const extension = fileURLToPath(new URL("..", import.meta.url));
@@ -241,7 +245,7 @@ describe("lockpicking in a campaign", () => {
             `Bruna passes 2 of the 4 dice of ${door} with their action, 2 left: call lockpicking-pick again at their next action; with Fast Hands, twice in a round. If they leave the lock, fall or turn to fight, break it off with stop.`,
         );
         const [card] = await widgets();
-        expect(card).toMatchObject({ id: "lockpicking.lock", place: "side", title: "Lock", module: "/pkg/%40rpgengine%2Flockpicking/0.2.0/page.js", figures: { tumblers: { width: 360, height: 105, mirror: true } } });
+        expect(card).toMatchObject({ id: "lockpicking.lock", place: "side", title: "Lock", module: `/pkg/%40rpgengine%2Flockpicking/${version}/page.js`, figures: { tumblers: { width: 360, height: 105, mirror: true } } });
         expect(card.shows?.data).toEqual({ pins: 4, up: 2, held: 0, ones: [], coming: 2, pick: 2 });
         expect(card.shows?.parts).toEqual([
             { who: "Bruna", does: "picks" },
