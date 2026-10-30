@@ -44,7 +44,7 @@
     "format": "eslint --fix . && dprint fmt"
   },
   "devDependencies": {
-    "@rpgengine/system-5e": "^1.0.0",
+    "@rpgengine/system-5e": "^0.9.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^22.20.4",
     "@typescript-eslint/parser": "^8.72.1",
