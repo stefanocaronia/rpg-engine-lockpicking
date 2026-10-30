@@ -1,12 +1,13 @@
 // The lockpicking extension (D-257, D-505): the rules of complexity, failures and rerolls, and the extension in a campaign of the fifth edition, through the
 // engine's commands, with the dice given and the player's clicks faked.
 import fc from "fast-check";
-import { readFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { type Context, type Rows, type TestCampaign, testCampaign } from "rpg-engine/testing";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { type Tumblers, type TumblersOf, tumblersOf } from "../src/tumblers.ts";
 import { canReroll, complexity, diceToRoll, failureOf, failuresToJam, needsTools, onesIn, rerollsLeft, rerollsPerAttempt, rogueReduction, rolledAttempt, roundedDc, timeOf } from "../src/lock.ts";
+import { type Tumblers, type TumblersOf, tumblersOf } from "../src/tumblers.ts";
 
 /** Dice that show these faces in turn. */
 function faces(...values: number[]): () => number
@@ -139,11 +140,19 @@ describe("the cylinder the page code draws (D-509, D-510)", () => {
     });
 
     it("never gives more pins up, held, marked or coming than there are, whatever the attempt", () => {
-        fc.assert(fc.property(fc.integer({ min: 0, max: 24 }), fc.integer({ min: 0, max: 30 }), fc.option(fc.record({ ones: fc.integer({ min: 0, max: 6 }), rolled: fc.integer({ min: 0, max: 24 }) }), { nil: undefined }), fc.boolean(), (dice, passed, pending, fight) => {
-            const cylinder = tumblersOf({ dice, passed, ...(pending === undefined ? {} : { pending }), fight });
-            expect(cylinder.up + cylinder.held + cylinder.ones.length + cylinder.coming).toBeLessThanOrEqual(cylinder.pins);
-            expect(cylinder.ones.every((pin) => pin >= cylinder.up + cylinder.held && pin < cylinder.pins)).toBe(true);
-        }));
+        fc.assert(
+            fc.property(
+                fc.integer({ min: 0, max: 24 }),
+                fc.integer({ min: 0, max: 30 }),
+                fc.option(fc.record({ ones: fc.integer({ min: 0, max: 6 }), rolled: fc.integer({ min: 0, max: 24 }) }), { nil: undefined }),
+                fc.boolean(),
+                (dice, passed, pending, fight) => {
+                    const cylinder = tumblersOf({ dice, passed, ...(pending === undefined ? {} : { pending }), fight });
+                    expect(cylinder.up + cylinder.held + cylinder.ones.length + cylinder.coming).toBeLessThanOrEqual(cylinder.pins);
+                    expect(cylinder.ones.every((pin) => pin >= cylinder.up + cylinder.held && pin < cylinder.pins)).toBe(true);
+                },
+            ),
+        );
     });
 });
 
@@ -225,7 +234,8 @@ describe("lockpicking in a campaign", () => {
         await ok("config", "language", "it");
         const asked = shown.length;
         expect(await pick()).toBe(
-            `Bruna fails ${door}: a 1, and the player kept their rerolls. Failure 2 of 4 in a row: it now shows signs of tampering, which whoever looks at it later notices (lock-tampered). It took 12 s: advance them if anything waits on it.`,
+            `Bruna fails ${door}: a 1, and the player kept their rerolls. Failure 2 of 4 in a row: it now shows signs of tampering, which whoever looks at it later notices (lock-tampered). `
+                + "It took 12 s: advance them if anything waits on it.",
         );
         expect(await lock()).toEqual(["lock-dc: 15", "lock-failures: 2", "lock-tampered: yes"]);
         expect(shown.slice(asked)).toEqual(["Forzare la serratura prima della ronda", "È uscito un 1: lo ritiri? Ritiri rimasti: 1"]);
@@ -328,7 +338,9 @@ describe("lockpicking in a campaign", () => {
         expect(await fail()).toContain("Failure 3 of 4 in a row: the mechanism is getting ruined: its complexity goes up by 1 (lock-worn).");
         expect(await ok("lockpicking", door, "--who", "Lena")).toContain("complexity 2, 1 of it from wear; no tools needed. Failures in a row: 3 of 4; signs of tampering.\nLena rolls 4d6");
         expect(await fail()).toBe(
-            `Lena fails ${door}: a 1, and no reroll is left, back with a short rest. Failure 4 of 4 in a row: it is jammed and no one picks it any more. Ask Lena for a Dexterity check against DC 5 with roll: if it fails, the thieves' tools break; take them from the inventory. Then it is forced or broken by the system's rules, opened by Knock or mended by a smith, as you rule. It took 12 s: advance them if anything waits on it.`,
+            `Lena fails ${door}: a 1, and no reroll is left, back with a short rest. Failure 4 of 4 in a row: it is jammed and no one picks it any more. `
+                + "Ask Lena for a Dexterity check against DC 5 with roll: if it fails, the thieves' tools break; take them from the inventory. "
+                + "Then it is forced or broken by the system's rules, opened by Knock or mended by a smith, as you rule. It took 12 s: advance them if anything waits on it.",
         );
         expect(await lock()).toEqual(["lock-dc: 5", "lock-failures: 4", "lock-tampered: yes", "lock-worn: 1", "lock-state: jammed"]);
         expect((await rpg("lockpicking-pick", door, "--who", "Lena")).output).toBe(`${door} is jammed: there is nothing to pick. It may still be forced or broken, by the system's rules.`);
@@ -584,17 +596,68 @@ describe("lockpicking in a campaign", () => {
         await ok("write", "Tecla", "--type", "character", "--set", "role=companion", "--set", "classes=[[Cleric]] 1", "--add", "inventory=[[Coltello]]");
         const tecla = (...args: string[]) => rpg("lockpicking-pick", door, "--who", "Tecla", ...args);
         expect((await tecla()).output).toBe(
-            "Tecla is not proficient with thieves' tools: give tool, an item of their inventory to pick it with, as thieves' tools, a knife or a screwdriver, as you allow. With none, no one picks it: it is forced or broken by the system's rules.",
+            "Tecla is not proficient with thieves' tools: give tool, an item of their inventory to pick it with, as thieves' tools, a knife or a screwdriver, as you allow. "
+                + "With none, no one picks it: it is forced or broken by the system's rules.",
         );
         expect((await tecla("--tool", "Cacciavite")).output).toBe("Tecla carries no Cacciavite: give tool as an item of their inventory, or force or break the lock by the system's rules. Nothing was rolled.");
         expect(await ok("lockpicking", door, "--who", "Tecla")).toContain(
             "Tecla, not proficient with thieves' tools, needs a tool of their inventory, rolls 4 dice a step without rerolls, and jams it at the second failure in a row. Failures in a row: 0 of 2.\nTecla rolls 4d6",
         );
         expect((await tecla("--tool", "coltello")).output).toBe(`Tecla fails ${door}: a 1. Failure 1 of 2 in a row: it resets, and the next attempt starts over. It took 12 s: advance them if anything waits on it.`);
-        expect((await tecla("--tool", "Coltello")).output).toContain(`Tecla fails ${door}: a 1. Failure 2 of 2 in a row: it is jammed and no one picks it any more. Ask Tecla for a Dexterity check against DC 5 with roll: if it fails, the Coltello breaks; take it from the inventory.`);
+        expect((await tecla("--tool", "Coltello")).output).toContain(
+            `Tecla fails ${door}: a 1. Failure 2 of 2 in a row: it is jammed and no one picks it any more. Ask Tecla for a Dexterity check against DC 5 with roll: if it fails, the Coltello breaks; take it from the inventory.`,
+        );
 
         await ok("write", "Forziere", "--type", "item", "--set", "lock-dc=10");
         expect((await rpg("lockpicking-pick", "Forziere", "--who", "Tecla", "--tool", "Coltello")).output).toContain("Failure 1 of 1 in a row: it is jammed");
         expect(await ok("show", "Forziere")).toContain("lock-state: jammed");
+    });
+
+    it("lets who is not proficient pick it with a tool inside what they carry, or a copy of it, by the names the engine compares (D-508)", async () => {
+        await campaign(5, 2, 3, 4, 5, 2, 3, 4, 5);
+        await ok("write", "Coltello", "--type", "item");
+        await ok("write", "Coltello di Tecla", "--type", "item", "--set", "item=[[Coltello]]");
+        await ok("write", "Zaino", "--type", "item", "--add", "contains=[[Coltello di Tecla]]");
+        await ok("write", "Tecla", "--type", "character", "--set", "role=companion", "--set", "classes=[[Cleric]] 1", "--add", "inventory=[[Zaino]]");
+        expect(await ok("lockpicking-pick", door, "--who", "Tecla", "--tool", "coltello")).toContain(`Tecla picks ${door}: 4d6 without a 1 left.`);
+        await ok("write", door, "--unset", "lock-state");
+        expect(await ok("lockpicking-pick", door, "--who", "Tecla", "--tool", "Coltello di Tecla")).toContain(`Tecla picks ${door}`);
+    });
+
+    it("counts a 1 waiting for its rerolls a failure when the time passes, as stop does, the others lost (review of 30 October)", async () => {
+        await campaign(15);
+        await ok("config", "dice", "physical");
+        await pick();
+        await pick("--values", "1,3,4,5");
+        expect(await ok("advance", "--to", "day 1, 10:00")).toContain(`Bruna fails ${door}: a 1 waiting for the rerolls when the time passed. Failure 1 of 4 in a row: it resets, and the next attempt starts over.`);
+        expect(await lock()).toEqual(["lock-dc: 15", "lock-failures: 1"]);
+        expect(await ok("lockpicking", door)).not.toContain("is picking it");
+    });
+
+    it("reads no attempt written wrong by hand, and words its default question in the campaign's language (review of 30 October)", async () => {
+        await campaign(15, 3, 4, 5, 6);
+        const state = join(testing.folder, "extensions", "lockpicking", "state.yaml");
+        mkdirSync(dirname(state), { recursive: true });
+        writeFileSync(state, "attempts: [a, b]\n");
+        expect(await ok("lockpicking", door)).not.toContain("undefined");
+        writeFileSync(state, `attempts:\n  ${door}: yes\n`);
+        expect(await ok("lockpicking", door)).not.toContain("is picking it");
+
+        await ok("config", "language", "it");
+        clicks = [0];
+        expect(await ok("lockpicking-pick", door)).toContain(`Bruna picks ${door}`);
+        expect(shown).toEqual(["Scassina la serratura: un 1 la richiude"]);
+        expect(buttons.at(-1)?.[0]).toMatch(/^Tiro: Scasso \(\d+d6\)$/);
+    });
+
+    it("refuses a DC that asks more dice than a roll takes, and names a picker of two words as the next call takes them", async () => {
+        await campaign(15);
+        await ok("write", "Ugo Ferri", "--type", "character", "--set", "role=companion", "--add", "tool-proficiencies=thieves' tools");
+        expect(await ok("lockpicking", door, "--who", "Ugo Ferri")).toContain(`\nNext: lockpicking-pick "${door}", who "Ugo Ferri".`);
+        await ok("write", door, "--set", "lock-dc=100000");
+        const refused = await rpg("lockpicking-pick", door);
+        expect(refused.exitCode).toBe(1);
+        expect(refused.output).toContain(`${door} has lock-dc 100000, which asks more than 100 dice: write a DC between 5 and 30, from the typical DCs (SRD 5.1 p. 77:`);
+        expect(refused.output).toContain("Nothing was rolled.");
     });
 });

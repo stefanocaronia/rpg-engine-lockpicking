@@ -1,6 +1,6 @@
 // The odds of lockpicking by complexity (D-508), simulated with the rules of dist/lock.js, as built: for each profile and DC, how often the lock opens at the
 // first attempt, and before it jams, trying again without a rest. `npm run odds` builds first.
-import { complexity, diceToRoll, failureOf, failuresToJam, rerollsPerAttempt, rogueReduction, rolledAttempt } from "../dist/lock.js";
+import { complexity, diceToRoll, failureOf, rerollsPerAttempt, rogueReduction, rolledAttempt } from "../dist/lock.js";
 
 const tries = 100_000;
 const dcs = [5, 10, 15, 20, 25, 30];
@@ -16,6 +16,7 @@ const profiles = [
 function seeded(seed)
 {
     let state = seed >>> 0;
+
     return () => {
         state = (state + 0x6d2b79f5) >>> 0;
         let mixed = Math.imul(state ^ (state >>> 15), 1 | state);
@@ -30,7 +31,7 @@ function attempts(profile, dc, roll)
     let rerolls = profile.bonus;
     let worn = 0;
 
-    for (let inRow = 1; ; inRow++) {
+    for (let inRow = 1;; inRow++) {
         const dice = diceToRoll(complexity(dc, worn), rogueReduction(profile.dexterity, profile.rogue), profile.proficient);
         const { opened, spent } = rolledAttempt(dice, Math.min(rerolls, rerollsPerAttempt(profile.proficient, profile.expertise)), roll);
         rerolls -= spent;
@@ -42,7 +43,7 @@ function attempts(profile, dc, roll)
         const failure = failureOf(inRow, dc, profile.proficient);
         worn += failure.worn ? 1 : 0;
 
-        if (failure.jammed || inRow >= failuresToJam(dc, profile.proficient)) {
+        if (failure.jammed) {
             return { first: false, before: false };
         }
     }

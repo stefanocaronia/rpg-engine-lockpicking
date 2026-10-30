@@ -11,6 +11,8 @@ fields:
   lock-state: Stato della serratura
 words:
   # What the player is asked, and what their rolls mean.
+  "Pick the lock: a 1 resets it": "Scassina la serratura: un 1 la richiude"
+  Lockpicking: Scasso
   "A 1 came up: reroll? {left} left": "È uscito un 1: lo ritiri? Ritiri rimasti: {left}"
   "{ones} ones came up: reroll them? {left} left": "Sono usciti {ones} 1: li ritiri? Ritiri rimasti: {left}"
   Leave: Lascia

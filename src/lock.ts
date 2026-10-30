@@ -1,9 +1,9 @@
 // The rules of lockpicking by complexity, as numbers: the lock's DC rounded to 5, its complexity, the d6 to roll and the rounds they take, the failures in a
 // row and what each does, the rerolls of the ones, for who is proficient with thieves' tools and who is not (D-508). The code that reads and writes the game
-// is in index.ts; scripts/odds.mjs gives the odds of these rules.
+// is in the other files; scripts/odds.mjs gives the odds of these rules.
 
 /** The failures in a row after which a lock jams, for who is proficient with thieves' tools. */
-export const mostFailures = 4;
+const mostFailures = 4;
 
 /** The lowest DC the rounded one takes, at which tools are needed, and the seconds of a round. */
 const lowestDc = 5;

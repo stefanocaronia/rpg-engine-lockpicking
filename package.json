@@ -1,6 +1,6 @@
 {
   "name": "@rpgengine/lockpicking",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Lockpicking by complexity for RPG Engine, compatible with fifth edition: a lock is opened with d6 by its complexity, a 1 resets it, failures in a row ruin it, proficiency gives rerolls.",
   "type": "module",
   "main": "dist/index.js",
@@ -30,7 +30,7 @@
   },
   "rpg-engine": {
     "kind": "extension",
-    "api": 5,
+    "api": 7,
     "page": "dist/page.js"
   },
   "engines": {
@@ -38,16 +38,21 @@
   },
   "scripts": {
     "build": "tsc",
-    "lint": "tsc --noEmit -p tsconfig.test.json",
+    "lint": "eslint . && dprint check && tsc --noEmit -p tsconfig.test.json",
     "test": "npm run build && vitest run",
-    "odds": "npm run build && node scripts/odds.mjs"
+    "odds": "npm run build && node scripts/odds.mjs",
+    "format": "eslint --fix . && dprint fmt"
   },
   "devDependencies": {
     "@rpgengine/system-5e": "^1.0.0",
+    "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^22.20.4",
+    "@typescript-eslint/parser": "^8.72.1",
+    "dprint": "^0.58.0",
+    "eslint": "^10.14.0",
     "fast-check": "^4.10.2",
     "preact": "^10.29.8",
-    "rpg-engine": "^0.7.0",
+    "rpg-engine": "^0.8.0",
     "typescript": "^6.0.3",
     "vitest": "^5.0.3"
   }

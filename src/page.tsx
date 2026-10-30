@@ -3,7 +3,7 @@
 // The pick, of a fixed length, slides in the keyway under the pin it works on, and out of the lock once it is open. Drawn with the page's tokens, in style
 // objects (the page's security keeps out <style>); it moves once the dice land, from the data before to the data now, and never with reduced motion.
 import type { JSX } from "preact";
-import { useState } from "preact/hooks";
+import { useId } from "preact/hooks";
 import type { FigureProps, PageModule } from "rpg-engine/page";
 import type { Tumblers } from "./tumblers.ts";
 
@@ -22,7 +22,8 @@ function TumblersFigure({ data, before, reducedMotion }: FigureProps)
     const pickLift = now.pick !== null && kindOf(now, now.pick) === "held" ? heldLift : 0;
     // The pins lifted since the look before, in order, then the pick slides on: the moves wait for one another, a share of --quick each.
     const lifted = was === undefined ? 0 : Math.max(0, now.up - was.up);
-    const id = useId();
+    // Ids of the drawing's gradient and mask, one set per cylinder.
+    const id = `tumblers-${useId()}`;
     return (
         <svg viewBox={`${-left} 0 ${width + left + 4} ${height}`} preserveAspectRatio="xMidYMid meet" aria-hidden="true" style={{ display: "block", width: "100%", height: "100%" }}>
             <defs>
@@ -37,9 +38,7 @@ function TumblersFigure({ data, before, reducedMotion }: FigureProps)
             <path d={`M0 10a10 10 0 0 1 10 -10H${width - 10}a10 10 0 0 1 10 10V${shear}H0Z`} style={paint.housing} />
             <path d={`M0 ${shear}H${width}V72a10 10 0 0 1 -10 10H10a10 10 0 0 1 -10 -10Z`} style={paint.plug} />
             <rect x={0} y={floor + 1} width={width - shape.edge + 2} height={11} rx={3} style={paint.hole} />
-            {Array.from({ length: now.pins }, (_, pin) => (
-                <Pin key={pin} x={centre(pin)} kind={kindOf(now, pin)} shape={shape} motion={reducedMotion ? undefined : motionOf(now, was, pin)} />
-            ))}
+            {Array.from({ length: now.pins }, (_, pin) => <Pin key={pin} x={centre(pin)} kind={kindOf(now, pin)} shape={shape} motion={reducedMotion ? undefined : motionOf(now, was, pin)} />)}
             <line x1={0} y1={shear} x2={width} y2={shear} style={paint.shear} />
             <g mask={`url(#${id}-out)`}>
                 <g style={{ transform: `translate(${tip}px, ${floor + 6.5 - pickLift}px)`, ...(reducedMotion ? {} : { transition: `transform var(--medium) var(--ease) ${step(lifted)}` }) }}>
@@ -172,14 +171,4 @@ function motionOf(now: Tumblers, was: Tumblers | undefined, pin: number): string
 function step(order: number): string
 {
     return `calc(${Math.max(0, order)} * var(--quick) / 2)`;
-}
-
-// Ids of the drawing's gradient and mask, one set per cylinder.
-let drawn = 0;
-
-/** An id of its own for each cylinder drawn, kept as it is drawn again. */
-function useId(): string
-{
-    const [id] = useState(() => `tumblers-${++drawn}`);
-    return id;
 }
