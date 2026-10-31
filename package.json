@@ -31,6 +31,7 @@
   "rpg-engine": {
     "kind": "extension",
     "api": 7,
+    "system": "5e",
     "page": "dist/page.js"
   },
   "engines": {
