@@ -9,6 +9,12 @@ updates:
       dependencies:
         patterns: ["*"]
         update-types: ["minor", "patch"]
+    # TypeScript's next major waits for typescript-eslint; Node's types stay those of the oldest Node we support.
+    ignore:
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
