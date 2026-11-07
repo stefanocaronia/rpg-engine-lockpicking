@@ -54,7 +54,7 @@
     "fast-check": "^4.10.2",
     "preact": "^11.2.0",
     "rpg-engine": "^0.8.0",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "vitest": "^5.0.3"
   }
 }
