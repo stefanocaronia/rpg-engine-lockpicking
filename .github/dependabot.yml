@@ -1,4 +1,4 @@
-# Updates once a week, each ecosystem's in one pull request, so that CI tests them together.
+# Updates once a week, each ecosystem's minor and patch ones in one pull request, so that CI tests them together; a major one comes in a pull request of its own.
 version: 2
 updates:
   - package-ecosystem: npm
@@ -8,6 +8,7 @@ updates:
     groups:
       dependencies:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -15,3 +16,4 @@ updates:
     groups:
       actions:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
