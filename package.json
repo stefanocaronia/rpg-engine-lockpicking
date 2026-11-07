@@ -47,7 +47,7 @@
   "devDependencies": {
     "@rpgengine/system-5e": "^0.9.0",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@types/node": "^22.20.4",
+    "@types/node": "^26.6.6",
     "@typescript-eslint/parser": "^8.72.1",
     "dprint": "^0.58.0",
     "eslint": "^10.14.0",
