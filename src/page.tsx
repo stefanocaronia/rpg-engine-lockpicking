@@ -2,7 +2,7 @@
 // pin and a key pin in each; the shear line between housing and plug; a pin passed has its driver caught over the line, one held is half way, a 1 is marked.
 // The pick, of a fixed length, slides in the keyway under the pin it works on, and out of the lock once it is open. Drawn with the page's tokens, in style
 // objects (the page's security keeps out <style>); it moves once the dice land, from the data before to the data now, and never with reduced motion.
-import type { JSX } from "preact";
+import type { CSSProperties } from "preact";
 import { useId } from "preact/hooks";
 import type { FigureProps, PageModule } from "rpg-engine/page";
 import type { Tumblers } from "./tumblers.ts";
@@ -74,7 +74,7 @@ const keyHeight = 12;
 const driverHeight = 22;
 const heldLift = 5;
 
-const paint: Record<string, JSX.CSSProperties> = {
+const paint: Record<string, CSSProperties> = {
     housing: { fill: "color-mix(in srgb, var(--ink) 5%, var(--float))", stroke: "var(--rule)", strokeWidth: 1.5 },
     plug: { fill: "color-mix(in srgb, var(--ink) 20%, var(--float))", stroke: "var(--rule)", strokeWidth: 1.5 },
     hole: { fill: "var(--paper)" },
@@ -85,7 +85,7 @@ const paint: Record<string, JSX.CSSProperties> = {
     cross: { stroke: "var(--low)", strokeWidth: 2, strokeLinecap: "round" },
 };
 
-const drivers: Record<Kind, JSX.CSSProperties> = {
+const drivers: Record<Kind, CSSProperties> = {
     up: { fill: "var(--accent)", stroke: "var(--accent)", strokeWidth: 1.5 },
     held: { fill: "color-mix(in srgb, var(--accent) 35%, var(--float))", stroke: "var(--accent)", strokeWidth: 1.5 },
     one: { fill: "color-mix(in srgb, var(--low) 12%, var(--float))", stroke: "var(--low)", strokeWidth: 1.5 },
@@ -100,7 +100,7 @@ function Pin({ x, kind, shape, motion }: { x: number; kind: Kind; shape: Shape; 
     const keyTop = floor - keyHeight - lift;
     const driverTop = kind === "up" ? shear - driverHeight : keyTop - driverHeight;
     const half = shape.driver / 2;
-    const moved = (y: number): JSX.CSSProperties => ({ transform: `translateY(${y}px)`, ...(motion === undefined ? {} : { transition: `transform ${motion}` }) });
+    const moved = (y: number): CSSProperties => ({ transform: `translateY(${y}px)`, ...(motion === undefined ? {} : { transition: `transform ${motion}` }) });
     // The spring is drawn a unit tall and stretched to the driver's top, its line kept as thick.
     const spring = Array.from({ length: 7 }, (_, turn) => `${x + (turn === 0 || turn === 6 ? 0 : turn % 2 === 0 ? -half * 0.8 : half * 0.8)} ${turn / 6}`).join(" ");
     return (
