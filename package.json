@@ -1,6 +1,6 @@
 {
   "name": "@rpgengine/lockpicking",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Lockpicking by complexity for RPG Engine, compatible with fifth edition: a lock is opened with d6 by its complexity, a 1 resets it, failures in a row ruin it, proficiency gives rerolls.",
   "type": "module",
   "main": "dist/index.js",
@@ -45,7 +45,7 @@
     "format": "eslint --fix . && dprint fmt"
   },
   "devDependencies": {
-    "@rpgengine/system-5e": "^0.11.0",
+    "@rpgengine/system-5e": "^0.12.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^24.19.2",
     "@typescript-eslint/parser": "^8.72.1",
@@ -53,7 +53,7 @@
     "eslint": "^10.14.0",
     "fast-check": "^4.10.2",
     "preact": "^11.2.0",
-    "rpg-engine": "^0.12.0",
+    "rpg-engine": "^0.13.0",
     "typescript": "^6.0.3",
     "vitest": "^5.0.3"
   }
