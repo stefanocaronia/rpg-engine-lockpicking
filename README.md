@@ -28,7 +28,7 @@ Its code in the dashboard's page, `src/page.tsx` built to `dist/page.js`, draws 
 
 ## Develop and test
 
-You need Node 22.4 or later, the engine for its test kit, `rpg-engine/testing`, and the 5e system its campaigns play, `@rpgengine/system-5e`, both devDependencies:
+You need Node 24 or later, the engine for its test kit, `rpg-engine/testing`, and the 5e system its campaigns play, `@rpgengine/system-5e`, both devDependencies:
 
 ```sh
 npm install
