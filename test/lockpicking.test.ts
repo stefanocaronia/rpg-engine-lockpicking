@@ -593,6 +593,7 @@ describe("lockpicking in a campaign", () => {
 
     it("lets who is not proficient pick it with a tool of their inventory, four dice a step and no reroll, jamming at the first failure, at DC 5 the second (D-508)", async () => {
         await campaign(5, 2, 3, 4, 1, 1, 2, 3, 4, 2, 3, 4, 5, 6, 1, 2, 3);
+        await ok("write", "Coltello", "--type", "item");
         await ok("write", "Tecla", "--type", "character", "--set", "role=companion", "--set", "classes=[[Cleric]] 1", "--add", "inventory=[[Coltello]]");
         const tecla = (...args: string[]) => rpg("lockpicking-pick", door, "--who", "Tecla", ...args);
         expect((await tecla()).output).toBe(
