@@ -25,7 +25,7 @@ Before session 1, in a new folder chosen as `README.md` says, from the repo at t
 $run = "<runs>\<date>\<n>"
 $campaign = "$run\dogana"
 rpg init $campaign --name "La notte della dogana" --system 5e --language it --difficulty normal --lethality dice
-Copy-Item -Recurse -Force ..\rpg-engine-lockpickingplaytests\22-la-notte-della-dogana\world\* $campaign\world
+Copy-Item -Recurse -Force ..\rpg-engine-lockpicking\playtests\22-la-notte-della-dogana\world\* $campaign\world
 Push-Location $campaign
 rpg package install lockpicking
 rpg package list
@@ -52,10 +52,10 @@ First the check, which plays nothing; then the sessions, from the repo; then the
 
 ```
 $run = "<runs>\<date>\<n>"
-node playtests/run-playtest.mjs --campaign "$run\dogana" --profile playtests\players\chiara.md --out "$run\results" --prepared ..\rpg-engine-lockpickingplaytests\22-la-notte-della-dogana\brief.md --first "Ciao! Stanotte si entra in dogana, cominciamo?" --max 40 --uncommitted --check
-node playtests/run-playtest.mjs --campaign "$run\dogana" --profile playtests\players\chiara.md --out "$run\results" --prepared ..\rpg-engine-lockpickingplaytests\22-la-notte-della-dogana\brief.md --first "Ciao! Stanotte si entra in dogana, cominciamo?" --max 40 --uncommitted
-node playtests/run-playtest.mjs --campaign "$run\dogana" --profile playtests\players\chiara.md --out "$run\results" --session 2 --first "Ciao, riprendiamo?" --max 35 --dashboard --moments ..\rpg-engine-lockpickingplaytests\22-la-notte-della-dogana\moments.yaml --uncommitted
-node playtests/count-playtest.mjs "$run\results" ..\rpg-engine-lockpickingplaytests\22-la-notte-della-dogana\world > "$run\numbers.md"
+node playtests/run-playtest.mjs --campaign "$run\dogana" --profile playtests\players\chiara.md --out "$run\results" --prepared ..\rpg-engine-lockpicking\playtests\22-la-notte-della-dogana\brief.md --first "Ciao! Stanotte si entra in dogana, cominciamo?" --max 40 --uncommitted --check
+node playtests/run-playtest.mjs --campaign "$run\dogana" --profile playtests\players\chiara.md --out "$run\results" --prepared ..\rpg-engine-lockpicking\playtests\22-la-notte-della-dogana\brief.md --first "Ciao! Stanotte si entra in dogana, cominciamo?" --max 40 --uncommitted
+node playtests/run-playtest.mjs --campaign "$run\dogana" --profile playtests\players\chiara.md --out "$run\results" --session 2 --first "Ciao, riprendiamo?" --max 35 --dashboard --moments ..\rpg-engine-lockpicking\playtests\22-la-notte-della-dogana\moments.yaml --uncommitted
+node playtests/count-playtest.mjs "$run\results" ..\rpg-engine-lockpicking\playtests\22-la-notte-della-dogana\world > "$run\numbers.md"
 node playtests/run-playtest.mjs --profile playtests\players\chiara.md --out "$run\results" --questionnaire playtests\questionnaire.md
 ```
 
@@ -130,8 +130,8 @@ As for start A, in a folder of its own:
 $run = "<runs>\<date>\<n>"
 $campaign = "$run\dogana-b"
 rpg init $campaign --name "La notte della dogana" --system 5e --language it --difficulty normal --lethality dice
-Copy-Item -Recurse -Force ..\rpg-engine-lockpickingplaytests\22-la-notte-della-dogana\world\* $campaign\world
-Copy-Item -Recurse -Force ..\rpg-engine-lockpickingplaytests\22-la-notte-della-dogana\world-b\* $campaign\world
+Copy-Item -Recurse -Force ..\rpg-engine-lockpicking\playtests\22-la-notte-della-dogana\world\* $campaign\world
+Copy-Item -Recurse -Force ..\rpg-engine-lockpicking\playtests\22-la-notte-della-dogana\world-b\* $campaign\world
 Push-Location $campaign
 rpg package install lockpicking
 rpg config saves checkpoint; rpg config rigor rules; rpg config dice digital; rpg config units metric
@@ -172,8 +172,8 @@ Copy-Item -Recurse $campaign "$run\base-b"
 
 ```
 $run = "<runs>\<date>\<n>"
-node playtests/run-playtest.mjs --campaign "$run\dogana-b" --profile playtests\players\chiara.md --out "$run\results-b" --prepared ..\rpg-engine-lockpickingplaytests\22-la-notte-della-dogana\brief-b.md --first "Ciao! Sono alla porta delle celle, riprendiamo?" --max 30 --dashboard --moments ..\rpg-engine-lockpickingplaytests\22-la-notte-della-dogana\moments-b.yaml --uncommitted --check
-node playtests/run-playtest.mjs --campaign "$run\dogana-b" --profile playtests\players\chiara.md --out "$run\results-b" --prepared ..\rpg-engine-lockpickingplaytests\22-la-notte-della-dogana\brief-b.md --first "Ciao! Sono alla porta delle celle, riprendiamo?" --max 30 --dashboard --moments ..\rpg-engine-lockpickingplaytests\22-la-notte-della-dogana\moments-b.yaml --uncommitted
+node playtests/run-playtest.mjs --campaign "$run\dogana-b" --profile playtests\players\chiara.md --out "$run\results-b" --prepared ..\rpg-engine-lockpicking\playtests\22-la-notte-della-dogana\brief-b.md --first "Ciao! Sono alla porta delle celle, riprendiamo?" --max 30 --dashboard --moments ..\rpg-engine-lockpicking\playtests\22-la-notte-della-dogana\moments-b.yaml --uncommitted --check
+node playtests/run-playtest.mjs --campaign "$run\dogana-b" --profile playtests\players\chiara.md --out "$run\results-b" --prepared ..\rpg-engine-lockpicking\playtests\22-la-notte-della-dogana\brief-b.md --first "Ciao! Sono alla porta delle celle, riprendiamo?" --max 30 --dashboard --moments ..\rpg-engine-lockpicking\playtests\22-la-notte-della-dogana\moments-b.yaml --uncommitted
 node playtests/count-playtest.mjs "$run\results-b" "$run\base-b\world" > "$run\numbers-b.md"
 node playtests/run-playtest.mjs --profile playtests\players\chiara.md --out "$run\results-b" --questionnaire playtests\questionnaire.md
 ```
