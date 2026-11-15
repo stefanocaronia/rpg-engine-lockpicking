@@ -26,6 +26,10 @@ Its code in the dashboard's page, `src/page.tsx` built to `dist/page.js`, draws 
 | Rogue Dex +3, expertise, levels 5-8 | 100% / 100% | 98% / 100% | 94% / 100% | 87% / 99% | 77% / 98% | 68% / 96% |
 | Rogue Dex +3, expertise, levels 13-16 | 100% / 100% | 98% / 100% | 94% / 100% | 86% / 100% | 77% / 99% | 68% / 98% |
 
+## Tell us
+
+A problem goes to this repository's [issues](https://github.com/stefanocaronia/rpg-engine-lockpicking/issues/new/choose); questions and ideas to RPG Engine's [Discussions](https://github.com/stefanocaronia/rpg-engine/discussions). This repository takes no pull requests: to add something to the game, make a package of your own, a [game system](https://github.com/stefanocaronia/rpg-engine/blob/main/docs/game-systems.md) or an [extension](https://github.com/stefanocaronia/rpg-engine/blob/main/docs/extensions.md), in a repository of yours.
+
 ## Develop and test
 
 You need Node 24 or later, the engine for its test kit, `rpg-engine/testing`, and the 5e system its campaigns play, `@rpgengine/system-5e`, both devDependencies:
