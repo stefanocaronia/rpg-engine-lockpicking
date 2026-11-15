@@ -2,6 +2,9 @@ contact_links:
   - name: A problem with the game, the dashboard or the master
     url: https://github.com/stefanocaronia/rpg-engine/issues/new/choose
     about: Anything that is not about lockpicking goes to RPG Engine itself.
-  - name: A question, or to share how you play
-    url: https://github.com/stefanocaronia/rpg-engine/discussions
-    about: Ask and talk with other players in the Discussions.
+  - name: A question
+    url: https://github.com/stefanocaronia/rpg-engine/discussions/categories/help
+    about: How to install, connect your AI or do something in the game.
+  - name: An idea
+    url: https://github.com/stefanocaronia/rpg-engine/discussions/categories/ideas
+    about: What you would like the game to do, to share and vote on in the Discussions.
