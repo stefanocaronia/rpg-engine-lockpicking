@@ -1,0 +1,39 @@
+name: Something went wrong
+description: A lock that opened, reset or broke when it should not have; a roll or a message that is wrong.
+labels: [bug]
+body:
+  - type: textarea
+    id: did
+    attributes:
+      label: What you did
+      description: The steps, or what you wrote to the master. Leave out your campaign's secrets if you can.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: What the lock should have done, and why.
+    validations:
+      required: true
+  - type: textarea
+    id: happened
+    attributes:
+      label: What happened
+      description: What you saw, with the exact message if there was one. A screenshot of the dashboard helps.
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: What `rpg --version` and `rpg package list` print, such as rpg-engine 0.19.1 with @rpgengine/lockpicking 0.4.0.
+    validations:
+      required: true
+  - type: input
+    id: agent
+    attributes:
+      label: Your AI agent and model
+      description: Such as Claude Code with Opus, or Codex with GPT-5.
+    validations:
+      required: true
