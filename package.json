@@ -15,8 +15,15 @@
   "keywords": [
     "rpg-engine-package",
     "rpg-engine",
+    "rpg-engine-extension",
     "lockpicking",
-    "ttrpg"
+    "5e",
+    "dice",
+    "ai-game-master",
+    "rpg",
+    "ttrpg",
+    "tabletop",
+    "solo-rpg"
   ],
   "author": "Stefano Caronia",
   "license": "(MIT AND CC-BY-4.0)",
